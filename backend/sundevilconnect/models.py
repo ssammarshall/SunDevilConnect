@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -15,7 +16,7 @@ class Membership(models.Model):
         (LEADER, 'Leader')
     ]
 
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     club = models.ForeignKey('Club', on_delete=models.CASCADE)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=MEMBER)
     joined_at = models.DateField(auto_now_add=True)
@@ -31,7 +32,7 @@ class Membership(models.Model):
 class Club(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=255)
-    members = models.ManyToManyField('User', through=Membership)
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, through=Membership)
 
     def __str__(self):
         return self.name
@@ -42,7 +43,7 @@ class Event(models.Model):
     location = models.CharField(max_length=255)
     is_paid_event = models.BooleanField()
     attendees = models.PositiveIntegerField()
-    max_num_0f_attendees = models.PositiveIntegerField()
+    max_num_of_attendees = models.PositiveIntegerField()
     club = models.ForeignKey('Club', on_delete=models.CASCADE)
 
     def __str__(self):

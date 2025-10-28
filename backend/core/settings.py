@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+
+    'sundevilconnect'
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+AUTH_USER_MODEL = 'sundevilconnect.User'
 
 DATABASES = {
     'default': {
