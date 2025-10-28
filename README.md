@@ -1,6 +1,6 @@
 # **SunDevilConnect**
 
-### Clone repo
+### **Clone repo**
 ```
 git clone https://github.com/ssammarshall/SunDevilConnect
 ```
@@ -30,7 +30,6 @@ pip install -r requirements.txt
 
 ### 4. Run migrations
 ```
-python manage.py makemigrations
 python manage.py migrate
 ```
 
