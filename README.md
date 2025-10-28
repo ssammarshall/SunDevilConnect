@@ -1,5 +1,10 @@
 # **SunDevilConnect**
 
+### Clone repo
+```
+git clone https://github.com/ssammarshall/SunDevilConnect
+```
+
 ## **Backend Installation**
 ### 1. CD to backend
 ```
