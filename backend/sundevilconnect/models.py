@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.db.models import Q, F
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser): # Student
@@ -48,3 +49,11 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                name='attendees_lte_max_num_of_attendees',
+                check=Q(attendees__lte=F('max_num_of_attendees'))
+            )
+        ]
