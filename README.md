@@ -41,7 +41,7 @@ python manage.py runserver
 ## **Running the Frontend**
 ### 1. CD to Frontend folder
 ```
-cd to frontend/sundevil-connect
+cd frontend/sundevil-connect
 ```
 ### 2. Run backend
 see above
