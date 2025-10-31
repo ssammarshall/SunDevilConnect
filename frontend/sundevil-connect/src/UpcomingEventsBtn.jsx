@@ -1,5 +1,5 @@
 import { constants } from "./constants";
-function UpcomingEventsBtn() {
+function UpcomingEventsBtn({setPage}) {
     function handleClick() {
         console.log("Click upcoming events button");
         let events = fetch(constants.backendURL+"/connect/events/?format=json").then((resp)=>{
@@ -10,6 +10,7 @@ function UpcomingEventsBtn() {
         }).catch(function(error) {
             console.log("error: "+error);
         });
+        setPage();
     }
     return (
         <>

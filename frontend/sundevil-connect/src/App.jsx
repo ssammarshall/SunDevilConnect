@@ -10,14 +10,15 @@ import MainScreen from './MainScreen.jsx'
 
 function App() {
   const [activePage, setActivePage] = useState("mainPage");
-  let page = <><LoginBtn setPage={()=>setActivePage("login")}></LoginBtn></>;
+  
   return (
     <>
       {activePage!=="login"?<LoginBtn setPage={()=>setActivePage("login")}></LoginBtn>:<></>}
       {activePage!=="mainPage"?<MainPageBtn setPage={()=>setActivePage("mainPage")}></MainPageBtn>:<></>}
       {
-        activePage==="mainPage"?<MainScreen setPage={setActivePage}></MainScreen>:
-        <LoginPage isActive={activePage==="login"}></LoginPage>
+        activePage==="mainPage"?<MainScreen setClubSearchPage={()=>setActivePage("ClubSearchPage")} setUpcomingEventsPage={()=>setActivePage("UpcomingEventsPage")}></MainScreen>:
+        (activePage==="login"?<LoginPage isActive={activePage==="login"}></LoginPage>:
+        (<></>))
       }
     </>
   )

@@ -1,5 +1,5 @@
 import { constants } from "./constants";
-function ClubSearchBtn() {
+function ClubSearchBtn({setPage}) {
     function handleClick() {
         console.log("Click club search button");
         let clubs = fetch(constants.backendURL+"/connect/clubs/?format=json").then((resp)=>{
@@ -10,6 +10,7 @@ function ClubSearchBtn() {
         }).catch(function(error) {
             console.log("error: "+error);
         });
+        setPage();
     }
     return (
         <>
