@@ -1,6 +1,6 @@
 import UpcomingEventsBtn from './UpcomingEventsBtn.jsx'
 import ClubSearchBtn from './ClubSearchBtn.jsx'
-function MainScreen() {
+function MainScreen({setPage}) {
   return (
     <>
       <UpcomingEventsBtn></UpcomingEventsBtn>

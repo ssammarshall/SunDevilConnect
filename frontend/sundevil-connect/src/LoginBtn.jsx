@@ -1,7 +1,8 @@
 import './App.css'
-function LoginBtn() {
+function LoginBtn({setPage}) {
     function handleClick() {
         console.log("Click login button");
+        setPage();
     }
     return (
         <>
