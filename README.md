@@ -47,7 +47,7 @@ cd to frontend/sundevil-connect
 see above
 
 ### 3. Set the proper URL
-    in src/constants.js, there is a variable called backendURL. When the backend server was set up, it should say "Starting development server at http:// followed by a bunch of numbers. Set backendURL in the constants class to those numbers, including the periods and including the :8000 at the end (this should not be required during development. Do the entire IP address, but not the HTTP part). 
+    In src/constants.js, there is a variable called backendURL. When the backend server was set up, it should say "Starting development server at http:// followed by a bunch of numbers. Set backendURL in the constants class to those numbers, including the periods and including the :8000 at the end (this should not be required during development. Do the entire IP address, but not the HTTP part). 
 
 ### 4. Run Frontend
 ```

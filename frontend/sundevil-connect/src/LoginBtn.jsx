@@ -1,10 +1,11 @@
+import './App.css'
 function LoginBtn() {
     function handleClick() {
         console.log("Click login button");
     }
     return (
         <>
-            <button onClick={handleClick}>login</button>
+            <button className="topBtn" onClick={handleClick}>login</button>
         </>
     )
 }
