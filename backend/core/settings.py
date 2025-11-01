@@ -81,7 +81,7 @@ AUTH_USER_MODEL = 'sundevilconnect.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sundevilconnect',
+        'NAME': 'postgres',
         'USER': 'ssammarshall',
         'PASSWORD': 'password123!',
         'HOST': 'sundevilconnect.cpy226qs4jii.us-east-2.rds.amazonaws.com',
