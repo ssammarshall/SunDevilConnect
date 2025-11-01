@@ -80,8 +80,12 @@ AUTH_USER_MODEL = 'sundevilconnect.User'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sundevilconnect',
+        'USER': 'ssammarshall',
+        'PASSWORD': 'password123!',
+        'HOST': 'sundevilconnect.cpy226qs4jii.us-east-2.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
