@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 # code files
+__pycache__/
 *.pyc
