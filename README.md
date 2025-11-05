@@ -22,7 +22,8 @@ source venv/bin/activate
 ### 2. Install dependencies
 ```
 # Using Makefile:
-make prod
+make build
+
 # OR using Windows:
 # Command Prompt (CMD): .\build.bat
 # PowerShell: .\build.ps1
