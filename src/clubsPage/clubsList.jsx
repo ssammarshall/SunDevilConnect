@@ -1,0 +1,11 @@
+import ClubEntry from "./clubEntry";
+function ClubsList({clubs}) {
+    console.log("loading clubs list");
+    console.log(clubs);
+    return (<ul>{
+        clubs.map((item) => (
+        <li key={item.name}><ClubEntry club={item}></ClubEntry></li>)
+    )}</ul>);
+}
+
+export default ClubsList;
