@@ -18,9 +18,6 @@ ALLOWED_HOSTS=env.list('BACKEND_ALLOWED_HOSTS', default=[])
 frontend_port = env("FRONTEND_PORT", default="3000")
 CORS_ALLOWED_ORIGINS = [f"http://localhost:{frontend_port}"]
 
-print(CORS_ALLOWED_ORIGINS)
-print("yes")
-
 DATABASES = {
     'default': {
         'ENGINE': env('DB_ENGINE'),
