@@ -6,11 +6,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment
 env = environ.Env()
-environ.Env.read_env(BASE_DIR / '.env')
+env.read_env(BASE_DIR / '.env')
+shared_env_path = BASE_DIR.parent / ".env.shared"
+if shared_env_path.exists():
+    env.read_env(shared_env_path)
 
 SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS=env.list('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS=env.list('BACKEND_ALLOWED_HOSTS', default=[])
 CORS_ALLOWED_ORIGINS=env.list('CORS_ALLOWED_ORIGINS', default=[])
 
 DATABASES = {
