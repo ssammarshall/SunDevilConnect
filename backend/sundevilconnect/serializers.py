@@ -20,3 +20,15 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ['id', 'name', 'date', 'location', 'is_paid_event', 'attendees', 'max_num_of_attendees', 'club']
+
+
+class EventCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['name', 'date', 'location', 'is_paid_event', 'max_num_of_attendees', 'club']
+
+
+class EventPartialUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['name', 'date', 'location', 'is_paid_event', 'max_num_of_attendees']
