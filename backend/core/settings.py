@@ -14,7 +14,12 @@ if shared_env_path.exists():
 SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS=env.list('BACKEND_ALLOWED_HOSTS', default=[])
-CORS_ALLOWED_ORIGINS=env.list('CORS_ALLOWED_ORIGINS', default=[])
+
+frontend_port = env("FRONTEND_PORT", default="3000")
+CORS_ALLOWED_ORIGINS = [f"http://localhost:{frontend_port}"]
+
+print(CORS_ALLOWED_ORIGINS)
+print("yes")
 
 DATABASES = {
     'default': {
