@@ -11,10 +11,8 @@ class TokenCreateView(BaseTokenCreateView):
 
         user = serializer.user
 
-        # 🔥 Generate JWT manually
         refresh = RefreshToken.for_user(user)
 
-        # 🔥 Serialize user fields
         user_data = UserLoginSerializer(user).data
 
         response_data = {
