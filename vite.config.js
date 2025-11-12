@@ -10,7 +10,7 @@ if (fs.existsSync(sharedEnv)) {
 }
 
 const backendPort = process.env.BACKEND_PORT || 8000;
-const backendUrl = `http://127.0.0.1:${backendPort}/connect`;
+const backendUrl = `http://127.0.0.1:${backendPort}`;
 
 // https://vite.dev/config/
 export default defineConfig({
