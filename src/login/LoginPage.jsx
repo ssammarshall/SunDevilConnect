@@ -14,8 +14,14 @@ function LoginPage({setRole}) {
                 console.log("Invalid user");
             } else {
                 console.log("Valid user");
-                setRole("logged in");
+                let json = response.json();
+                return json;
             }
+        }).then(function(data) {
+            console.log(data);
+            sessionStorage.setItem("refresh",data.refresh);
+            sessionStorage.setItem("access", data.access);
+            setRole("logged in");
         }).catch(error=> {
             console.log("Error: "+error);
         });
