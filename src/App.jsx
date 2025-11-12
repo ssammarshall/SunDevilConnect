@@ -9,6 +9,7 @@ import './App.css'
 import MainScreen from './MainScreen.jsx'
 import ClubsScreen from './clubsPage/clubsScreen.jsx'
 import EventsScreen from './eventsPage/eventsScreen.jsx'
+import NewUserPage from './login/newUserPage.jsx'
 
 function App() {
   const [activePage, setActivePage] = useState("mainPage");
@@ -19,10 +20,11 @@ function App() {
       {activePage!=="mainPage"?<MainPageBtn setPage={()=>setActivePage("mainPage")}></MainPageBtn>:<></>}
       {
         activePage==="mainPage"?<MainScreen setClubSearchPage={()=>setActivePage("ClubSearchPage")} setUpcomingEventsPage={()=>setActivePage("UpcomingEventsPage")}></MainScreen>:
-        (activePage==="login"?<LoginPage setRole={(role) => setActiveRole(role)}></LoginPage>:
+        (activePage==="login"?<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>:
         (activePage==="ClubSearchPage"?<ClubsScreen></ClubsScreen>:
-        (activePage==="UpcomingEventsPage"?<EventsScreen></EventsScreen>
-          :(<></>))))
+        (activePage==="UpcomingEventsPage"?<EventsScreen></EventsScreen>:
+        (activePage==="newUserPage"?<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>
+          :(<></>)))))
       }
     </>
   )
