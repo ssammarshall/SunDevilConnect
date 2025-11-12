@@ -49,5 +49,6 @@ python backend\manage.py createsuperuser
 ```
 
 ### 2. Log in to Admin Panel
-Go to http://127.0.0.1:8000/admin\
+Go to http://127.0.0.1:8000/admin
+
 (This host and port may vary depending on your .env files)
