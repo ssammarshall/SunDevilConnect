@@ -1,4 +1,4 @@
-function LoginPage({setRole}) {
+function LoginPage({setRole, setPage}) {
     function onButtonClick() {
         console.log("Logging in");
         let body = {};
@@ -14,17 +14,28 @@ function LoginPage({setRole}) {
                 console.log("Invalid user");
             } else {
                 console.log("Valid user");
-                setRole("logged in");
+                let json = response.json();
+                return json;
             }
+        }).then(function(data) {
+            console.log(data);
+            sessionStorage.setItem("refresh",data.refresh);
+            sessionStorage.setItem("access", data.access);
+            setRole("logged in");
         }).catch(error=> {
             console.log("Error: "+error);
         });
     }
+
+    function newUserClick() {
+        setPage('newUserPage');
+    }
     return (
         <>
-            <input id="username"></input><br/><br/>
-            <input type="password" id="password"></input><br/><br/>
+            <input id="username" placeholder="username"></input><br/><br/>
+            <input type="password" id="password" placeholder="password"></input><br/><br/>
             <button id="login" onClick={onButtonClick}>login</button>
+            <button id="new user" onClick={newUserClick}>new user</button>
         </>
     );
 }
