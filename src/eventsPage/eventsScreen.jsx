@@ -1,5 +1,4 @@
 import EventsList from './eventsList.jsx';
-import { constants } from '../constants.js'
 import { useState } from 'react'
 
 function EventsScreen() {
@@ -9,7 +8,7 @@ function EventsScreen() {
     //let isLoading = true;
     const [isLoading, setIsLoading] = useState(true);
     if (isLoading) {
-        let events = fetch(constants.backendURL+"/connect/events/?format=json").then((resp)=>{
+        let events = fetch(process.env.REACT_APP_API_URL+"/connect/events/?format=json").then((resp)=>{
         return resp.json();
     }).then(function(data) {
         setEventList(data);
@@ -24,7 +23,7 @@ function EventsScreen() {
         return (<div>Loading...</div>)
     }
 
-    return (<EventsList event={eventList}></EventsList>);
+    return (<EventsList events={eventList}></EventsList>);
 }
 
 export default EventsScreen;

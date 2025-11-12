@@ -1,7 +1,7 @@
 import EventEntry from "./eventEntry";
 function EventsList({events}) {
-    console.log("loading events list");
-    console.log(events);
+    //console.log("loading events list");
+    //console.log(events);
     if (events==null) {
         return (<p>There are no events in the database</p>);
     }

@@ -1,7 +1,7 @@
 function EventEntry({event}) {
     return (
         <>
-            {event.name + ", " + event.description}
+            {event.name + ", " + event.club.name}
         </>
     )
 }

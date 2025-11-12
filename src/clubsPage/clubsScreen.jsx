@@ -1,5 +1,4 @@
 import ClubsList from './clubsList.jsx'
-import { constants } from '../constants.js'
 import { useState } from 'react'
 
 function ClubsScreen() {
@@ -9,7 +8,7 @@ function ClubsScreen() {
     //let isLoading = true;
     const [isLoading, setIsLoading] = useState(true);
     if (isLoading) {
-        let clubs = fetch(constants.backendURL+"/connect/clubs/?format=json").then((resp)=>{
+        let clubs = fetch(process.env.REACT_APP_API_URL+"/connect/clubs/?format=json").then((resp)=>{
         return resp.json();
     }).then(function(data) {
         setClubList(data);
