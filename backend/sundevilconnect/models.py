@@ -43,7 +43,7 @@ class Event(models.Model):
     date = models.DateTimeField()
     location = models.CharField(max_length=255)
     is_paid_event = models.BooleanField()
-    attendees = models.PositiveIntegerField()
+    attendees = models.PositiveIntegerField(default=0)
     max_num_of_attendees = models.PositiveIntegerField()
     club = models.ForeignKey('Club', on_delete=models.CASCADE)
 
