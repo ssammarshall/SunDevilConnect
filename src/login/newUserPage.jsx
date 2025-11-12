@@ -9,7 +9,7 @@ function NewUserPage({setRole, setPage}) {
         body.email = document.getElementById("email").value;
 
         //console.log(body);
-        fetch(process.env.REACT_APP_API_URL+"/auth/users",{
+        fetch(process.env.REACT_APP_API_URL+"/auth/users/",{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body)
