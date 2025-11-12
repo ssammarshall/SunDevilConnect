@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
+from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import Club, Event
 
-class UserSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(BaseUserCreateSerializer):
     username = serializers.CharField(
         max_length=150,
         validators=[UniqueValidator(get_user_model().objects.all(), message='Username is already in use.')]
@@ -16,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(get_user_model().objects.all(), message='Email already in use.')]
     )
     password = serializers.CharField(style={"input_type": "password"}, write_only=True)
-    confirm_password = serializers.CharField(style={"input_type": "password"}, write_only=True)
 
     @transaction.atomic
     def create(self, validated_data):
@@ -28,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
         last = validated_data.pop('last_name')
         email = validated_data.pop('email')
         password = validated_data.pop('password')
-        validated_data.pop('confirm_password')
 
         User = get_user_model()
         user = User.objects.create_user(
@@ -41,19 +40,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
-    
-    def validate(self, attrs):
-        if attrs['password'] != attrs['confirm_password']:
-            raise serializers.ValidationError({'confirm_password': 'Passwords do not match'})
-        validate_password(attrs['password'])
-        return super().validate(attrs)
 
-    class Meta:
-        model = get_user_model()
+    class Meta(BaseUserCreateSerializer.Meta):
         fields = [
             'id',
-            'username', 'first_name', 'last_name', 'email', # User fields.
-            'password', 'confirm_password', # Django password validation fields.
+            'username', 'first_name', 'last_name', 'email',
+            'password',
         ]
 
 class ClubSerializer(serializers.ModelSerializer):

@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
+    'djoser',
     'rest_framework',
 
-    'sundevilconnect',
-    'corsheaders'
+    'sundevilconnect'
 ]
 
 MIDDLEWARE = [
@@ -78,23 +79,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 AUTH_USER_MODEL = 'sundevilconnect.User'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'ssammarshall',
-        'PASSWORD': 'password123!',
-        'HOST': 'sundevilconnect.cpy226qs4jii.us-east-2.rds.amazonaws.com',
-        'PORT': '5432'
-    }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'sundevilconnect.serializers.UserCreateSerializer',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

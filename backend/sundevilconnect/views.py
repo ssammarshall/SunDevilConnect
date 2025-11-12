@@ -1,13 +1,7 @@
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.viewsets import ModelViewSet
 
-from .models import User, Club, Event
-from .serializers import UserSerializer, ClubSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
-
-class RegisterUserViewSet(CreateModelMixin, GenericViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
+from .models import Club, Event
+from .serializers import ClubSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
 
 class ClubViewSet(ModelViewSet):
     queryset = Club.objects.all()
