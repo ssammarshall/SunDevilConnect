@@ -9,15 +9,15 @@ function ClubsScreen() {
     const [isLoading, setIsLoading] = useState(true);
     if (isLoading) {
         let clubs = fetch(process.env.REACT_APP_API_URL+"/connect/clubs/?format=json").then((resp)=>{
-        return resp.json();
-    }).then(function(data) {
-        setClubList(data);
-        setIsLoading(false);
-        //console.log(clubList);
-    }).catch(function(error) {
-        console.log("error: "+error);
-    });
-}
+            return resp.json();
+        }).then(function(data) {
+            setClubList(data);
+            setIsLoading(false);
+            //console.log(clubList);
+        }).catch(function(error) {
+            console.log("error: "+error);
+        });
+    }
     console.log(isLoading);
     if (isLoading) {
         return (<div>Loading...</div>)
