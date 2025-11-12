@@ -54,6 +54,7 @@ class UserLoginSerializer(BaseUserCreateSerializer):
     memberships = MembershipSerializer(many=True, read_only=True)
 
     class Meta(BaseUserCreateSerializer.Meta):
+        model = get_user_model()
         fields = [
             'id',
             'username', 'email',

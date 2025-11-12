@@ -5,7 +5,7 @@ function LoginPage({setRole, setPage}) {
         body.username = document.getElementById("username").value;
         body.password = document.getElementById("password").value;
         //console.log(body);
-        fetch(process.env.REACT_APP_API_URL+"/auth/jwt/create",{
+        fetch(process.env.REACT_APP_API_URL+"/auth/jwt/create/",{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body)
