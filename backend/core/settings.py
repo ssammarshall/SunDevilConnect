@@ -93,7 +93,7 @@ SIMPLE_JWT = {
 
 DJOSER = {
     'SERIALIZERS': {
-        'user_create': 'sundevilconnect.serializers.UserCreateSerializer',
+        'user_create': 'core.serializers.UserCreateSerializer',
     }
 }
 
