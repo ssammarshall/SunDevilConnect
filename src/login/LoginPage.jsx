@@ -1,4 +1,4 @@
-function LoginPage() {
+function LoginPage({setRole}) {
     function onButtonClick() {
         console.log("Logging in");
         let body = {};
@@ -14,6 +14,7 @@ function LoginPage() {
                 console.log("Invalid user");
             } else {
                 console.log("Valid user");
+                setRole("logged in");
             }
         }).catch(error=> {
             console.log("Error: "+error);
