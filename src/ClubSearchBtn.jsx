@@ -1,4 +1,3 @@
-import { constants } from "./constants";
 function ClubSearchBtn({setPage}) {
     let clubList = {};
     function handleClick() {
