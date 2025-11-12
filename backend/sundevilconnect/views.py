@@ -16,6 +16,13 @@ class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def check_is_club_leader(self, user, club_id):
+        if not Membership.objects.filter(
+            user=user,
+            club_id=club_id,
+            role='L'
+        ).exists(): raise PermissionDenied("Only club leaders can create events for this club.")
+
     def create(self, request, *args, **kwargs):
         user = request.user
         if user is None:
@@ -25,16 +32,18 @@ class EventViewSet(ModelViewSet):
         if club_id is None:
             raise PermissionDenied("Club is required to post new events.")
         
-        is_club_leader = Membership.objects.filter(
-            user=user,
-            club_id=club_id,
-            role='L'
-        ).exists()
-
-        if not is_club_leader:
-            raise PermissionDenied("Only club leaders can create events for this club.")
-
+        self.check_is_club_leader(request.user, club_id)
         return super().create(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        event = self.get_object()
+        self.check_is_club_leader(request.user, event.club_id)
+        return super().partial_update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        event = self.get_object()
+        self.check_is_club_leader(request.user, event.club_id)
+        return super().destroy(request, *args, **kwargs)
 
     def get_serializer_class(self):
         match self.action:
