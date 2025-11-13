@@ -13,7 +13,7 @@ function LoginPage({setRole, setPage}) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body)
         }).then(response=> {
-            if (response.status==401) {
+            if (response.status>=400) {
                 console.log("Invalid user");
                 return {access:"invalid user"};
             } else {
