@@ -20,13 +20,20 @@ class ClubContentViewSet(ModelViewSet):
     
     def get_permissions(self):
         match self.action:
-            case 'create': return [IsClubMember]
-            case 'destroy': return [IsClubMember]
-            case 'partial_update': return [IsClubMember]
-            case _: return [AllowAny]
+            case 'create': return [IsClubMember()]
+            case 'destroy': return [IsClubMember()]
+            case 'partial_update': return [IsClubMember()]
+            case _: return [AllowAny()]
 
     def get_serializer_context(self):
         return {'club_id': self.kwargs['club_pk']}
+
+    def perform_create(self, serializer):
+        club_id = self.kwargs.get("club_id")
+        serializer.save(
+            author=self.request.user,
+            club_id=club_id
+        )
 
 
 class EventViewSet(ModelViewSet):

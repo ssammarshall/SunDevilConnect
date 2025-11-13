@@ -42,6 +42,7 @@ class Club(models.Model):
 
 
 class ClubContent(models.Model):
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255)
     body = models.TextField()
     is_flagged = models.BooleanField(default=False)
