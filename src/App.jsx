@@ -22,7 +22,7 @@ function App() {
   
   //set up the page
   let topButtons = (<div>
-    {activePage!==pages.loginPage?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
+    {(activePage!==pages.loginPage&&activePage!==pages.profilePage)?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
     {activePage!==pages.mainPage?<MainPageBtn setPage={()=>setActivePage(pages.mainPage)}></MainPageBtn>:<></>}
   </div>);
   let page;
