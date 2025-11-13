@@ -2,6 +2,11 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 from .models import Membership
 
+class IsAuthorOfClubContent(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.author == request.user
+
+
 class IsClubLeader(BasePermission):
     def has_permission(self, request, view):
         user = request.user
@@ -10,7 +15,7 @@ class IsClubLeader(BasePermission):
         club_id = request.data.get('club')
         if club_id is None: return False # No club provided.
 
-        return Membership.objects.filter(user=user, club_id=club_id, role=Membership.ROLE_CHOICES[Membership.LEADER]).exists()
+        return Membership.objects.filter(user=user, club_id=club_id, role='L').exists()
 
 
 class IsClubLeaderOrReadyOnly(BasePermission):
