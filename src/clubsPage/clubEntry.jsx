@@ -6,6 +6,9 @@ function ClubEntry({club, role, setPage, setId}) {
         setPage(pages.specificClubPage);
     }
     //different return values based on the role
+    //view club for members
+    //manage club for admins and club leaders
+    //join club for logged in non-members
     switch (role) {
         case roles.admin:
             return (

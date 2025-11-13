@@ -1,5 +1,5 @@
 import EventEntry from "./eventEntry";
-function EventsList({events, role}) {
+function EventsList({events, role, setPage, setId}) {
     //console.log("loading events list");
     //console.log(events);
     if (events==null) {
@@ -7,7 +7,7 @@ function EventsList({events, role}) {
     }
     return (<ul>{
         events.map((item) => (
-        <li key={item.name}><EventEntry role={role} event={item}></EventEntry></li>)
+        <li key={item.name}><EventEntry setPage={(page)=>setPage(page)} setId={()=>setId(item.id)} role={role} event={item}></EventEntry></li>)
     )}</ul>);
 }
 

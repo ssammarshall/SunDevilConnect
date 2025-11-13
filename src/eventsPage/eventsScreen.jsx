@@ -1,7 +1,7 @@
 import EventsList from './eventsList.jsx';
 import { useState } from 'react'
 
-function EventsScreen({role}) {
+function EventsScreen({role, setPage, setId}) {
     //console.log("Events Screen");
     //let clubList = {};
     let [eventList, setEventList] = useState({});
@@ -23,7 +23,7 @@ function EventsScreen({role}) {
         return (<div>Loading...</div>)
     }
 
-    return (<EventsList role={role} events={eventList}></EventsList>);
+    return (<EventsList setPage={(page)=>setPage(page)} setId={(id)=>setId(id)} role={role} events={eventList}></EventsList>);
 }
 
 export default EventsScreen;
