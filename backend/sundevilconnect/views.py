@@ -1,4 +1,4 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Club, ClubContent, Event
@@ -8,6 +8,7 @@ from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer,
 class ClubViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class ClubContentViewSet(ModelViewSet):
