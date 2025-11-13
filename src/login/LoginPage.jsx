@@ -12,6 +12,7 @@ function LoginPage({setRole, setPage}) {
         }).then(response=> {
             if (response.status==401) {
                 console.log("Invalid user");
+                return {access:"invalid user"};
             } else {
                 console.log("Valid user");
                 let json = response.json();
@@ -19,9 +20,12 @@ function LoginPage({setRole, setPage}) {
             }
         }).then(function(data) {
             console.log(data);
-            sessionStorage.setItem("refresh",data.refresh);
-            sessionStorage.setItem("access", data.access);
-            setRole("logged in");
+            if (access!="invalid user") {
+                sessionStorage.setItem("refresh",data.refresh);
+                sessionStorage.setItem("access", data.access);
+                setRole("logged in");
+                setPage("mainPage");
+            }
         }).catch(error=> {
             console.log("Error: "+error);
         });

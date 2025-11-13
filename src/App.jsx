@@ -15,7 +15,7 @@ import ProfilePage from './profile/ProfilePage.jsx'
 function App() {
   const [activePage, setActivePage] = useState("mainPage");
   const [activeRole, setActiveRole] = useState("not logged in");
-
+  const [id, setId] = useState(-1);
   //There is likely a way to refactor this that is much better
   return (
     <>
