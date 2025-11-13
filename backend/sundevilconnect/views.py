@@ -37,14 +37,27 @@ class ClubContentViewSet(ModelViewSet):
         )
 
 
-class EventViewSet(ModelViewSet):
+# Events for a specific Club.
+class ClubEventViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
 
-    queryset = Event.objects.all()
     permission_classes = [IsClubLeaderOrReadyOnly]
 
+    def get_queryset(self):
+        return Event.objects.filter(club_id=self.kwargs['club_pk']).prefetch_related('club')
+    
     def get_serializer_class(self):
         match self.action:
             case 'create': return EventCreateSerializer
             case 'partial_update': return EventPartialUpdateSerializer
             case _: return EventSerializer
+
+
+# All Events.
+class EventViewSet(ModelViewSet):
+    http_method_names = ['get']
+
+    queryset = Event.objects.all().prefetch_related('club')
+    serializer_class = EventSerializer
+    permission_classes = [AllowAny]
+
