@@ -1,5 +1,5 @@
 import ClubEntry from "./clubEntry";
-function ClubsList({clubs, role}) {
+function ClubsList({clubs, role, setPage}) {
     //console.log("loading clubs list");
     //console.log(clubs);
     if (clubs==null) {
@@ -7,7 +7,7 @@ function ClubsList({clubs, role}) {
     }
     return (<ul>{
         clubs.map((item) => (
-            <li key={item.name}><ClubEntry role={role} club={item}></ClubEntry></li>)
+            <li key={item.name}><ClubEntry setPage={(page)=>setPage(page)} role={role} club={item}></ClubEntry></li>)
         )
     }</ul>);
 }
