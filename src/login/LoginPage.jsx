@@ -1,4 +1,6 @@
 import { pages } from "../Pages";
+import { roles } from "../roles";
+
 function LoginPage({setRole, setPage}) {
     function onButtonClick() {
         console.log("Logging in");
@@ -24,7 +26,8 @@ function LoginPage({setRole, setPage}) {
             if (data.access!="invalid user") {
                 sessionStorage.setItem("refresh",data.refresh);
                 sessionStorage.setItem("access", data.access);
-                setRole("logged in");
+                //TODO: update when I am able to get all roles
+                setRole(roles.user);
                 setPage(pages.mainPage);
             }
         }).catch(error=> {

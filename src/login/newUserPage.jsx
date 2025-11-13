@@ -1,3 +1,4 @@
+import { roles } from "../roles";
 function NewUserPage({setRole, setPage}) {
     function onButtonClick() {
         console.log("Logging in");
@@ -25,7 +26,7 @@ function NewUserPage({setRole, setPage}) {
             console.log(data);
             //sessionStorage.setItem("refresh",data.refresh);
             //sessionStorage.setItem("access", data.access);
-            setRole("logged in");
+            setRole(roles.user);
         }).catch(error=> {
             console.log("Error: "+error);
         });

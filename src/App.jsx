@@ -5,6 +5,7 @@ import LoginBtn from './LoginBtn.jsx'
 import LoginPage from './login/LoginPage.jsx'
 import MainPageBtn from './MainPageBtn.jsx'
 import { pages } from './Pages.js'
+import { roles } from './roles.js'
 
 import './App.css'
 import MainScreen from './MainScreen.jsx'
@@ -14,8 +15,8 @@ import NewUserPage from './login/newUserPage.jsx'
 import ProfilePage from './profile/ProfilePage.jsx'
 
 function App() {
-  const [activePage, setActivePage] = useState("mainPage");
-  const [activeRole, setActiveRole] = useState("not logged in");
+  const [activePage, setActivePage] = useState(pages.mainPage);
+  const [activeRole, setActiveRole] = useState(roles.unknown);
   const [id, setId] = useState(-1);
   //There is likely a way to refactor this that is much better
   return (

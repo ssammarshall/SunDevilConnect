@@ -1,5 +1,6 @@
 import './App.css'
 import { pages } from './Pages';
+import { roles } from './roles';
 function LoginBtn({setPage, role}) {
     function login() {
         console.log("Click login button");
@@ -11,7 +12,7 @@ function LoginBtn({setPage, role}) {
         setPage(pages.profilePage);
     }
 
-    if (role=="not logged in") {
+    if (role==roles.unknown) {
         return (
             <>
                 <button className="topBtn" onClick={login}>login</button>

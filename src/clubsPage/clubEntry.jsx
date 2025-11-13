@@ -1,8 +1,9 @@
+import { roles } from "../roles";
 function ClubEntry({club, role}) {
 
     //different return values based on the role
     switch (role) {
-        case "admin":
+        case roles.admin:
             return (
                 <span>
                     {club.name}<br/>
