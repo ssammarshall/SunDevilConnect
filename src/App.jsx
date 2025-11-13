@@ -22,7 +22,7 @@ function App() {
   
   //set up the page
   let topButtons = (<div>
-    {activePage!==pages.loginPage?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
+    {(activePage!==pages.loginPage&&activePage!==pages.profilePage)?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
     {activePage!==pages.mainPage?<MainPageBtn setPage={()=>setActivePage(pages.mainPage)}></MainPageBtn>:<></>}
   </div>);
   let page;
@@ -42,9 +42,10 @@ function App() {
     case pages.newUserPage:
       page=<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>;
       break;
+    /*The profile page does not work currently, so I am leading it to the pageDoesNotExist page
     case pages.profilePage:
       page=<ProfilePage role={activeRole}></ProfilePage>;
-      break;
+      break;*/
     default:
       page=<PageDoesNotExist></PageDoesNotExist>;
   }
