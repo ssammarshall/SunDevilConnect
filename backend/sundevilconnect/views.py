@@ -1,62 +1,77 @@
-from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Membership, Club, ClubContent, Event
+from .models import Club, ClubContent, Event
+from .permissions import IsClubLeaderOrReadyOnly, IsClubMember
 from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
 
 class ClubViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class ClubContentViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+
     serializer_class = ClubContentSerializer
 
     def get_queryset(self):
         return ClubContent.objects.filter(club_id=self.kwargs['club_pk'])
     
+    def get_permissions(self):
+        match self.action:
+            case 'create': return [IsClubMember()]
+            case 'destroy': return [IsClubMember()]
+            case 'partial_update': return [IsClubMember()]
+            case _: return [AllowAny()]
+
     def get_serializer_context(self):
         return {'club_id': self.kwargs['club_pk']}
 
+    def perform_create(self, serializer):
+        club_id = self.kwargs.get("club_pk")
+        serializer.save(
+            author=self.request.user,
+            club_id=club_id
+        )
+    
+    @action(detail=True, methods=['get', 'post'], url_path='flag') # TODO: 'get' only required when using drf; not necessary for use on frontend?
+    def flag(self, request, club_pk=None, pk=None):
+        content = self.get_object()
+        content.is_flagged = True
+        content.save()
 
-class EventViewSet(ModelViewSet):
+        return Response(
+            {"message": "Content flagged successfully."},
+            status=status.HTTP_200_OK
+        )
+
+
+# Events for a specific Club.
+class ClubEventViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
 
-    queryset = Event.objects.all()
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsClubLeaderOrReadyOnly]
 
-    def check_is_club_leader(self, user, club_id):
-        if not Membership.objects.filter(
-            user=user,
-            club_id=club_id,
-            role='L'
-        ).exists(): raise PermissionDenied("Only club leaders can create events for this club.")
-
-    def create(self, request, *args, **kwargs):
-        user = request.user
-        if user is None:
-            raise PermissionDenied("Must be logged in.") # Should never reach this line because of permission_classes requiring authentication.
-
-        club_id = request.data.get("club")
-        if club_id is None:
-            raise PermissionDenied("Club is required to post new events.")
-        
-        self.check_is_club_leader(request.user, club_id)
-        return super().create(request, *args, **kwargs)
-
-    def partial_update(self, request, *args, **kwargs):
-        event = self.get_object()
-        self.check_is_club_leader(request.user, event.club_id)
-        return super().partial_update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        event = self.get_object()
-        self.check_is_club_leader(request.user, event.club_id)
-        return super().destroy(request, *args, **kwargs)
-
+    def get_queryset(self):
+        return Event.objects.filter(club_id=self.kwargs['club_pk']).prefetch_related('club')
+    
     def get_serializer_class(self):
         match self.action:
             case 'create': return EventCreateSerializer
             case 'partial_update': return EventPartialUpdateSerializer
             case _: return EventSerializer
+
+
+# All Events.
+class EventViewSet(ModelViewSet):
+    http_method_names = ['get']
+
+    queryset = Event.objects.all().prefetch_related('club')
+    serializer_class = EventSerializer
+    permission_classes = [AllowAny]
+

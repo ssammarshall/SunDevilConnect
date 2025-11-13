@@ -18,13 +18,13 @@ class Membership(models.Model):
         (LEADER, 'Leader')
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='memberships')
     club = models.ForeignKey('Club', on_delete=models.CASCADE)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=MEMBER)
     joined_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} in {self.club} as {self.ROLE_CHOICES[self.role]}"
+        return f"{self.user} in {self.club} as {self.get_role_display()}"
     
     class Meta:
         constraints = [
@@ -42,6 +42,7 @@ class Club(models.Model):
 
 
 class ClubContent(models.Model):
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255)
     body = models.TextField()
     is_flagged = models.BooleanField(default=False)
