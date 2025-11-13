@@ -29,7 +29,7 @@ class ClubContentViewSet(ModelViewSet):
         return {'club_id': self.kwargs['club_pk']}
 
     def perform_create(self, serializer):
-        club_id = self.kwargs.get("club_id")
+        club_id = self.kwargs.get("club_pk")
         serializer.save(
             author=self.request.user,
             club_id=club_id

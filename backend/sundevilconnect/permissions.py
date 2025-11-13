@@ -12,7 +12,7 @@ class IsClubLeader(BasePermission):
         user = request.user
         if not user or not user.is_authenticated: return False
         
-        club_id = request.data.get('club')
+        club_id = view.kwargs.get('club_pk')
         if club_id is None: return False # No club provided.
 
         return Membership.objects.filter(user=user, club_id=club_id, role='L').exists()
@@ -29,7 +29,7 @@ class IsClubMember(BasePermission):
         user = request.user
         if not user or not user.is_authenticated: return False
         
-        club_id = request.data.get('club')
+        club_id = view.kwargs.get('club_pk')
         if club_id is None: return False # No club provided.
 
         return Membership.objects.filter(user=user, club_id=club_id).exists()
