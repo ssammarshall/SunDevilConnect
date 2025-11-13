@@ -24,7 +24,7 @@ class Membership(models.Model):
     joined_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} in {self.club} as {self.ROLE_CHOICES[self.role]}"
+        return f"{self.user} in {self.club} as {self.get_role_display()}"
     
     class Meta:
         constraints = [

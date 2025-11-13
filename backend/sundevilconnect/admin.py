@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Membership, Club, Event
 
-admin.site.register(Membership)
 admin.site.register(Club)
 admin.site.register(Event)
 
@@ -26,3 +25,8 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
+
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = ['user', 'club', 'role']
