@@ -1,8 +1,8 @@
-from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Membership, Club, ClubContent, Event
+from .models import Club, ClubContent, Event
+from .permissions import IsClubLeaderOrReadyOnly, IsClubMember
 from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
 
 class ClubViewSet(ModelViewSet):
@@ -20,7 +20,9 @@ class ClubContentViewSet(ModelViewSet):
     
     def get_permissions(self):
         match self.action:
-            case 'create': return [IsAuthenticated]
+            case 'create': return [IsClubMember]
+            case 'destroy': return [IsClubMember]
+            case 'partial_update': return [IsClubMember]
             case _: return [AllowAny]
 
     def get_serializer_context(self):
@@ -31,36 +33,7 @@ class EventViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
 
     queryset = Event.objects.all()
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def check_is_club_leader(self, user, club_id):
-        if not Membership.objects.filter(
-            user=user,
-            club_id=club_id,
-            role='L'
-        ).exists(): raise PermissionDenied("Only club leaders can create events for this club.")
-
-    def create(self, request, *args, **kwargs):
-        user = request.user
-        if user is None:
-            raise PermissionDenied("Must be logged in.") # Should never reach this line because of permission_classes requiring authentication.
-
-        club_id = request.data.get("club")
-        if club_id is None:
-            raise PermissionDenied("Club is required to post new events.")
-        
-        self.check_is_club_leader(request.user, club_id)
-        return super().create(request, *args, **kwargs)
-
-    def partial_update(self, request, *args, **kwargs):
-        event = self.get_object()
-        self.check_is_club_leader(request.user, event.club_id)
-        return super().partial_update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        event = self.get_object()
-        self.check_is_club_leader(request.user, event.club_id)
-        return super().destroy(request, *args, **kwargs)
+    permission_classes = [IsClubLeaderOrReadyOnly]
 
     def get_serializer_class(self):
         match self.action:
