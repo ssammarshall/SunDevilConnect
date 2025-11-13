@@ -13,6 +13,7 @@ import ClubsScreen from './clubsPage/clubsScreen.jsx'
 import EventsScreen from './eventsPage/eventsScreen.jsx'
 import NewUserPage from './login/newUserPage.jsx'
 import ProfilePage from './profile/ProfilePage.jsx'
+import PageDoesNotExist from './pageDoesNotExist.jsx'
 
 function App() {
   const [activePage, setActivePage] = useState(pages.mainPage);
@@ -26,11 +27,14 @@ function App() {
   </div>);
   let page;
   switch(activePage) {
+    case pages.mainPage:
+      page=<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>;
+      break;
     case pages.loginPage:
       page=<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>;
       break;
     case pages.clubsPage:
-      page=<ClubsScreen role={activeRole}></ClubsScreen>;
+      page=<ClubsScreen setPage={(page)=>setActivePage(page)} role={activeRole}></ClubsScreen>;
       break;
     case pages.eventsPage:
       page=<EventsScreen role={activeRole}></EventsScreen>;
@@ -42,7 +46,7 @@ function App() {
       page=<ProfilePage role={activeRole}></ProfilePage>;
       break;
     default:
-      page=<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>;
+      page=<PageDoesNotExist></PageDoesNotExist>;
   }
   return (<>
     {topButtons}

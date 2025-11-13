@@ -1,14 +1,15 @@
 import { roles } from "../roles";
-function ClubEntry({club, role}) {
+import { pages } from "../Pages";
+function ClubEntry({club, role, setPage}) {
 
     //different return values based on the role
     switch (role) {
         case roles.admin:
             return (
                 <span>
-                    {club.name}<br/>
-                    {club.description}
-                    <button>Manage club</button>
+                    <br/>{club.name}<br/>
+                    {club.description}<br/>
+                    <button onClick={()=>setPage(pages.specificClubPage)}>Manage club</button>
                 </span>
             )
         default: 
