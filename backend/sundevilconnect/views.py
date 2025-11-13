@@ -1,5 +1,5 @@
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Membership, Club, ClubContent, Event
@@ -11,11 +11,18 @@ class ClubViewSet(ModelViewSet):
 
 
 class ClubContentViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+
     serializer_class = ClubContentSerializer
 
     def get_queryset(self):
         return ClubContent.objects.filter(club_id=self.kwargs['club_pk'])
     
+    def get_permissions(self):
+        match self.action:
+            case 'create': return [IsAuthenticated]
+            case _: return [AllowAny]
+
     def get_serializer_context(self):
         return {'club_id': self.kwargs['club_pk']}
 
