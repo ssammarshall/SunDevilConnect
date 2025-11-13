@@ -1,4 +1,7 @@
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Club, ClubContent, Event
@@ -34,6 +37,17 @@ class ClubContentViewSet(ModelViewSet):
         serializer.save(
             author=self.request.user,
             club_id=club_id
+        )
+    
+    @action(detail=True, methods=['get', 'post'], url_path='flag') # TODO: 'get' only required when using drf; not necessary for use on frontend?
+    def flag(self, request, club_pk=None, pk=None):
+        content = self.get_object()
+        content.is_flagged = True
+        content.save()
+
+        return Response(
+            {"message": "Content flagged successfully."},
+            status=status.HTTP_200_OK
         )
 
 
