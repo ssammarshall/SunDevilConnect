@@ -2,12 +2,22 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Membership, Club, Event
-from .serializers import ClubSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
+from .models import Membership, Club, ClubContent, Event
+from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
 
 class ClubViewSet(ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
+
+
+class ClubContentViewSet(ModelViewSet):
+    serializer_class = ClubContentSerializer
+
+    def get_queryset(self):
+        return ClubContent.objects.filter(club_id=self.kwargs['club_pk'])
+    
+    def get_serializer_context(self):
+        return {'club_id': self.kwargs['club_pk']}
 
 
 class EventViewSet(ModelViewSet):

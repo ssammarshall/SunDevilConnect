@@ -9,6 +9,7 @@ class User(AbstractUser): # Student
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+
 class Membership(models.Model):
     MEMBER = 'M'
     LEADER = 'L'
@@ -30,6 +31,7 @@ class Membership(models.Model):
             models.UniqueConstraint(fields=['user', 'club'], name='unique_user_per_club')
         ]
 
+
 class Club(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=255)
@@ -37,6 +39,14 @@ class Club(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ClubContent(models.Model):
+    title = models.CharField(max_length=255)
+    body = models.TextField()
+    is_flagged = models.BooleanField(default=False)
+    club = models.ForeignKey('Club', on_delete=models.CASCADE)
+
 
 class Event(models.Model):
     name = models.CharField(max_length=255, unique=True)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Membership, Club, Event
+from .models import Membership, Club, ClubContent, Event
 
 class MembershipSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +12,16 @@ class ClubSerializer(serializers.ModelSerializer):
     class Meta:
         model = Club
         fields = ['id', 'name', 'description']
+
+
+class ClubContentSerializer(serializers.ModelSerializer):
+    def save(self, **kwargs):
+        club_id = self.context['club_id']
+        return ClubContent.objects.create(club_id=club_id, **self.validated_data)
+
+    class Meta:
+        model = ClubContent
+        fields = ['id', 'title', 'body']
 
 
 # Removes description field.
