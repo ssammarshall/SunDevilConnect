@@ -1,3 +1,4 @@
+import { pages } from "../Pages";
 function LoginPage({setRole, setPage}) {
     function onButtonClick() {
         console.log("Logging in");
@@ -20,11 +21,11 @@ function LoginPage({setRole, setPage}) {
             }
         }).then(function(data) {
             console.log(data);
-            if (access!="invalid user") {
+            if (data.access!="invalid user") {
                 sessionStorage.setItem("refresh",data.refresh);
                 sessionStorage.setItem("access", data.access);
                 setRole("logged in");
-                setPage("mainPage");
+                setPage(pages.mainPage);
             }
         }).catch(error=> {
             console.log("Error: "+error);
@@ -32,7 +33,7 @@ function LoginPage({setRole, setPage}) {
     }
 
     function newUserClick() {
-        setPage('newUserPage');
+        setPage(pages.newUserPage);
     }
     return (
         <>

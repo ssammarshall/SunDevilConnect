@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import LoginBtn from './LoginBtn.jsx'
 import LoginPage from './login/LoginPage.jsx'
 import MainPageBtn from './MainPageBtn.jsx'
+import { pages } from './Pages.js'
 
 import './App.css'
 import MainScreen from './MainScreen.jsx'
@@ -19,15 +20,15 @@ function App() {
   //There is likely a way to refactor this that is much better
   return (
     <>
-      {activePage!=="login"?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
-      {activePage!=="mainPage"?<MainPageBtn setPage={()=>setActivePage("mainPage")}></MainPageBtn>:<></>}
+      {activePage!==pages.loginPage?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
+      {activePage!==pages.mainPage?<MainPageBtn setPage={()=>setActivePage(pages.mainPage)}></MainPageBtn>:<></>}
       {
-        activePage==="mainPage"?<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>:
-        (activePage==="login"?<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>:
-        (activePage==="ClubSearchPage"?<ClubsScreen role={activeRole}></ClubsScreen>:
-        (activePage==="UpcomingEventsPage"?<EventsScreen role={activeRole}></EventsScreen>:
-        (activePage==="newUserPage"?<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>:
-        (activePage==="profile"?<ProfilePage role={activeRole}></ProfilePage>:
+        activePage===pages.mainPage?<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>:
+        (activePage===pages.loginPage?<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>:
+        (activePage===pages.clubsPage?<ClubsScreen role={activeRole}></ClubsScreen>:
+        (activePage===pages.eventsPage?<EventsScreen role={activeRole}></EventsScreen>:
+        (activePage===pages.newUserPage?<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>:
+        (activePage===pages.profilePage?<ProfilePage role={activeRole}></ProfilePage>:
           (<></>))))))
       }
     </>

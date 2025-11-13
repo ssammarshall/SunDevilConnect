@@ -1,13 +1,14 @@
 import './App.css'
+import { pages } from './Pages';
 function LoginBtn({setPage, role}) {
     function login() {
         console.log("Click login button");
-        setPage("login");
+        setPage(pages.loginPage);
     }
 
     function profile() {
         console.log("Click profile button");
-        setPage("profile");
+        setPage(pages.profilePage);
     }
 
     if (role=="not logged in") {
