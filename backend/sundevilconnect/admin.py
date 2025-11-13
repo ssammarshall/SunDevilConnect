@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, Membership, Club, Event
+from .models import User, Membership, Club, ClubContent, Event
 
 admin.site.register(Club)
 admin.site.register(Event)
@@ -30,3 +30,10 @@ class UserAdmin(BaseUserAdmin):
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ['user', 'club', 'role']
+
+
+@admin.register(ClubContent)
+class ClubContentAdmin(admin.ModelAdmin):
+    list_display = ['author', 'title', 'body', 'is_flagged', 'club']
+    list_editable = ['is_flagged']
+    ordering = ['is_flagged']
