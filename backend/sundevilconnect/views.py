@@ -1,17 +1,25 @@
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Club, ClubContent, Event
-from .permissions import IsClubLeaderOrReadyOnly, IsClubMember
+from .permissions import IsAuthorOfClubContent, IsClubLeader, IsClubLeaderOrReadyOnly, IsClubMember
 from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
 
 class ClubViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def get_permissions(self):
+        match self.action:
+            case 'create': return [IsAdminUser()]
+            case 'destroy': return [IsAdminUser()]
+            case 'partial_update': return [IsClubLeader()]
+            case _: return [IsClubLeaderOrReadyOnly()]
 
 
 class ClubContentViewSet(ModelViewSet):
@@ -25,8 +33,8 @@ class ClubContentViewSet(ModelViewSet):
     def get_permissions(self):
         match self.action:
             case 'create': return [IsClubMember()]
-            case 'destroy': return [IsClubMember()]
-            case 'partial_update': return [IsClubMember()]
+            case 'destroy': return [IsAuthorOfClubContent()]
+            case 'partial_update': return [IsAuthorOfClubContent()]
             case _: return [AllowAny()]
 
     def get_serializer_context(self):
