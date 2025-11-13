@@ -1,7 +1,10 @@
 import { roles } from "../roles";
 import { pages } from "../Pages";
-function ClubEntry({club, role, setPage}) {
-
+function ClubEntry({club, role, setPage, setId}) {
+    function buttonClick() {
+        setId(club.id);
+        setPage(pages.specificClubPage);
+    }
     //different return values based on the role
     switch (role) {
         case roles.admin:
@@ -9,7 +12,7 @@ function ClubEntry({club, role, setPage}) {
                 <span>
                     <br/>{club.name}<br/>
                     {club.description}<br/>
-                    <button onClick={()=>setPage(pages.specificClubPage)}>Manage club</button>
+                    <button onClick={()=>buttonClick()}>Manage club</button>
                 </span>
             )
         default: 

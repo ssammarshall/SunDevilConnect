@@ -14,6 +14,7 @@ import EventsScreen from './eventsPage/eventsScreen.jsx'
 import NewUserPage from './login/newUserPage.jsx'
 import ProfilePage from './profile/ProfilePage.jsx'
 import PageDoesNotExist from './pageDoesNotExist.jsx'
+import IndividualClubPage from './individualClubsPage/individualClubPage.jsx'
 
 function App() {
   const [activePage, setActivePage] = useState(pages.mainPage);
@@ -34,13 +35,16 @@ function App() {
       page=<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>;
       break;
     case pages.clubsPage:
-      page=<ClubsScreen setPage={(page)=>setActivePage(page)} role={activeRole}></ClubsScreen>;
+      page=<ClubsScreen setPage={(page)=>setActivePage(page)} role={activeRole} setId={(id)=>setId(id)}></ClubsScreen>;
       break;
     case pages.eventsPage:
       page=<EventsScreen role={activeRole}></EventsScreen>;
       break;
     case pages.newUserPage:
       page=<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>;
+      break;
+    case pages.specificClubPage:
+      page=<IndividualClubPage role={activeRole} id={id}></IndividualClubPage>
       break;
     /*The profile page does not work currently, so I am leading it to the pageDoesNotExist page
     case pages.profilePage:

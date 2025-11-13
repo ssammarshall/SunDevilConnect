@@ -27,7 +27,7 @@ function LoginPage({setRole, setPage}) {
                 sessionStorage.setItem("refresh",data.refresh);
                 sessionStorage.setItem("access", data.access);
                 //TODO: update when I am able to get all roles
-                setRole(roles.user);
+                setRole(roles.admin);
                 setPage(pages.mainPage);
             }
         }).catch(error=> {
