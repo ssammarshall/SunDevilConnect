@@ -1,4 +1,4 @@
-function ClubEntry({club}) {
+function ClubEntry({club, role}) {
     return (
         <>
             {club.name + ", " + club.description}

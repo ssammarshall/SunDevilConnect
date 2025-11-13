@@ -1,7 +1,7 @@
 import ClubsList from './clubsList.jsx'
 import { useState } from 'react'
 
-function ClubsScreen() {
+function ClubsScreen({role}) {
     //console.log("Clubs Screen");
     //let clubList = {};
     let [clubList, setClubList] = useState({});
@@ -25,7 +25,7 @@ function ClubsScreen() {
 
     console.log("CLUBS LIST=");
     console.log(clubList);
-    return (<ClubsList clubs={clubList}></ClubsList>);
+    return (<ClubsList clubs={clubList} role={role}></ClubsList>);
 }
 
 export default ClubsScreen;

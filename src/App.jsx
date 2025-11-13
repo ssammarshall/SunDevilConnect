@@ -21,8 +21,8 @@ function App() {
       {
         activePage==="mainPage"?<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>:
         (activePage==="login"?<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>:
-        (activePage==="ClubSearchPage"?<ClubsScreen></ClubsScreen>:
-        (activePage==="UpcomingEventsPage"?<EventsScreen></EventsScreen>:
+        (activePage==="ClubSearchPage"?<ClubsScreen role={activeRole}></ClubsScreen>:
+        (activePage==="UpcomingEventsPage"?<EventsScreen role={activeRole}></EventsScreen>:
         (activePage==="newUserPage"?<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>
           :(<></>)))))
       }

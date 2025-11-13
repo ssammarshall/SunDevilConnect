@@ -1,4 +1,4 @@
-function EventEntry({event}) {
+function EventEntry({event, role}) {
     return (
         <>
             {event.name + ", " + event.club.name}

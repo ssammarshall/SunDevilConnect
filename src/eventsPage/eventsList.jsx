@@ -1,5 +1,5 @@
 import EventEntry from "./eventEntry";
-function EventsList({events}) {
+function EventsList({events, role}) {
     //console.log("loading events list");
     //console.log(events);
     if (events==null) {
@@ -7,7 +7,7 @@ function EventsList({events}) {
     }
     return (<ul>{
         events.map((item) => (
-        <li key={item.name}><EventEntry event={item}></EventEntry></li>)
+        <li key={item.name}><EventEntry role={role} event={item}></EventEntry></li>)
     )}</ul>);
 }
 
