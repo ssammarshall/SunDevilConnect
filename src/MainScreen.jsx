@@ -1,10 +1,12 @@
 import UpcomingEventsBtn from './UpcomingEventsBtn.jsx'
 import ClubSearchBtn from './ClubSearchBtn.jsx'
-function MainScreen({setClubSearchPage, setUpcomingEventsPage}) {
+import AdminPanelButton from './AdminPanelButton.jsx'
+function MainScreen({setPage, role}) {
   return (
     <>
-      <UpcomingEventsBtn setPage={setUpcomingEventsPage}></UpcomingEventsBtn>
-      <ClubSearchBtn setPage={setClubSearchPage}></ClubSearchBtn>
+      <UpcomingEventsBtn setPage={()=>setPage("UpcomingEventsPage")}></UpcomingEventsBtn>
+      <ClubSearchBtn setPage={()=>setPage("ClubSearchPage")}></ClubSearchBtn>
+      {role=="admin"?<AdminPanelButton role={role}></AdminPanelButton>:<></>}
     </>
   )
 }

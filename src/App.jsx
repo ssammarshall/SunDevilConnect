@@ -19,7 +19,7 @@ function App() {
       {activePage!=="login"?<LoginBtn setPage={()=>setActivePage("login")}></LoginBtn>:<></>}
       {activePage!=="mainPage"?<MainPageBtn setPage={()=>setActivePage("mainPage")}></MainPageBtn>:<></>}
       {
-        activePage==="mainPage"?<MainScreen setClubSearchPage={()=>setActivePage("ClubSearchPage")} setUpcomingEventsPage={()=>setActivePage("UpcomingEventsPage")}></MainScreen>:
+        activePage==="mainPage"?<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>:
         (activePage==="login"?<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>:
         (activePage==="ClubSearchPage"?<ClubsScreen></ClubsScreen>:
         (activePage==="UpcomingEventsPage"?<EventsScreen></EventsScreen>:
