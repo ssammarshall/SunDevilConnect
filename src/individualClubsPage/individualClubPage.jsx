@@ -4,7 +4,7 @@ import EventsList from '../eventsPage/eventsList';
 import { pages } from '../Pages';
 import { roles } from '../roles';
 
-function IndividualClubPage({role, id, setPage, clubMemberships, setId}) {
+function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, setPostId}) {
 
     function newPost() {
         setPage(pages.newPostPage);
@@ -21,8 +21,8 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setId}) {
     let [clubEvents, setClubEvents] = useState({});
 
     let postsAndEvents = (<>
-        <ClubPostList setId={(id)=>setId(id)} posts={clubPosts} role={role} setPage={(page)=>setPage(page)}></ClubPostList>
-        <EventsList events={clubEvents} role={role} setPage={(page)=>setPage(page)}></EventsList>
+        <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={role} setPage={(page)=>setPage(page)}></ClubPostList>
+        <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={role} setPage={(page)=>setPage(page)}></EventsList>
     </>);
 
     const [isLoading, setIsLoading] = useState(2);
@@ -54,8 +54,8 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setId}) {
         if (clubMemberships[i].club_id==id||role==roles.admin) {
             if (clubMemberships[i].role==roles.clubLeader||role==roles.admin) {
                 return (<>
-                    <ClubPostList setId={(id)=>setId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
-                    <EventsList events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>
+                    <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
+                    <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>
                     <button onClick={newPost}>New Post</button>
                     <button onClick={newEvent}>New Event</button>
                 </>)

@@ -5,6 +5,10 @@ function EventEntry({event, role, setPage, setId}) {
         setId();
         setPage(pages.specificEventPage);
     }
+    function editEventBtn() {
+        setId();
+        setPage(pages.editEventPage);
+    }
     switch (role) {
         case roles.admin:
             return (<>
@@ -12,7 +16,7 @@ function EventEntry({event, role, setPage, setId}) {
                     {event.name}<br/>
                     {event.location}<br/>
                 </span><br/>
-                <button>Edit event</button>
+                <button onClick={editEventBtn}>Edit event</button>
             </>)
         default: 
             return (<>
