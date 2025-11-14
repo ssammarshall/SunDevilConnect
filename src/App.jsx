@@ -15,7 +15,11 @@ import NewUserPage from './login/newUserPage.jsx'
 import ProfilePage from './profile/ProfilePage.jsx'
 import PageDoesNotExist from './pageDoesNotExist.jsx'
 import IndividualClubPage from './individualClubsPage/individualClubPage.jsx'
-import IndividualEventPage from './individualEventsPage/individualEventPage.jsx' 
+import IndividualEventPage from './individualEventsPage/individualEventPage.jsx'
+import UpdateEventPage from './newEventPage/updateEventPage.jsx'
+import UpdatePostPage from './newPostPage/updatePostPage.jsx'
+import NewEventPage from './newEventPage/newEventPage.jsx'
+import NewPostPage from './newPostPage/newPostPage.jsx'
 
 function App() {
   const [activePage, setActivePage] = useState(pages.mainPage);
@@ -52,7 +56,18 @@ function App() {
     case pages.specificEventPage:
       page=<IndividualEventPage role={activeRole} id={id}></IndividualEventPage>
       break;
-    
+    case pages.editEventPage:
+      page=<UpdateEventPage id={id} setPage={(page)=>setActivePage(page)}></UpdateEventPage>;
+      break;
+    case pages.editPostPage:
+      page=<UpdatePostPage clubId={id} postId={postId} setPage={(page)=>setActivePage(page)}></UpdatePostPage>;
+      break;
+    case pages.newEventPage:
+      page=<NewEventPage id={id} setPage={(page)=>setActivePage(page)}></NewEventPage>;
+      break;
+    case pages.newPostPage:
+      page=<NewPostPage id={id} setPage={(page)=>setActivePage(page)}></NewPostPage>
+      break;
     case pages.profilePage:
       page=<ProfilePage role={activeRole}></ProfilePage>;
       break;
