@@ -1,14 +1,30 @@
 import { useState } from 'react'
 import ClubPostList from './clubPostList';
 import EventsList from '../eventsPage/eventsList';
+import { pages } from '../Pages';
+import { roles } from '../roles';
 
-function IndividualClubPage({role, id}) {
+function IndividualClubPage({role, id, setPage, clubMemberships}) {
+
+    function newPost() {
+        setPage(pages.newPostPage);
+    }
+
+    function newEvent() {
+        setPage(pages.newEventPage);
+    }
+
     //make a fetch call to the API
 
     //console.log("Club page");
     let [clubPosts, setClubPosts] = useState({});
     let [clubEvents, setClubEvents] = useState({});
-    
+
+    let postsAndEvents = (<>
+        <ClubPostList posts={clubPosts} role={role}></ClubPostList>
+        <EventsList events={clubEvents} role={role}></EventsList>
+    </>);
+
     const [isLoading, setIsLoading] = useState(2);
     if (isLoading) {
         //fetch both posts and events
@@ -34,13 +50,19 @@ function IndividualClubPage({role, id}) {
     if (isLoading!=0) {
         return (<div>Loading...</div>)
     }
-
-    console.log("CLUB POSTS=");
-    console.log(clubPosts);
-    return (<>
-        <ClubPostList posts={clubPosts} role={role}></ClubPostList>
-        <EventsList events={clubEvents} role={role}></EventsList>
-    </>);
+    for(let i=0; i<clubMemberships.length;i++) {
+        if (clubMemberships[i].club_id==id||role==roles.admin) {
+            if (clubMemberships[i].role==roles.clubLeader||role==roles.admin) {
+                return (<>{postsAndEvents}<br/>
+                    <button onclick={newPost}>New Post</button>
+                    <button onclick={newEvent}>New Event</button>
+                </>)
+            }
+        }
+    }
+    //console.log("CLUB POSTS=");
+    //console.log(clubPosts);
+    return (<>{postsAndEvents}</>);
 }
 
 export default IndividualClubPage;

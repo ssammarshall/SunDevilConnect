@@ -27,11 +27,11 @@ function ClubEntry({club, role, setPage, setId, clubMemberships, setClubMembersh
                 </span>
             )
         case roles.user:
-            console.log({club_id:club.id,club_name:club.name,role:"L"});
-            console.log(clubMemberships);
+            //console.log({club_id:club.id,club_name:club.name,role:"L"});
+            //console.log(clubMemberships);
             for(let i=0; i<clubMemberships.length;i++) {
                 if (clubMemberships[i].club_id==club.id) {
-                    if (clubMemberships[i].role=="L") {
+                    if (clubMemberships[i].role==roles.clubLeader) {
                         return (
                             <span>
                                 <br/>{club.name}<br/>
@@ -39,7 +39,7 @@ function ClubEntry({club, role, setPage, setId, clubMemberships, setClubMembersh
                                 <button onClick={()=>buttonClick()}>Manage club</button>
                             </span>
                         )
-                    } else if (clubMemberships[i].role=="M") {
+                    } else if (clubMemberships[i].role==roles.clubMember) {
                         return (
                             <span>
                                 <br/>{club.name}<br/>
