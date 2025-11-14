@@ -1,7 +1,7 @@
 import { pages } from "../Pages";
 import { roles } from "../roles";
 
-function LoginPage({setRole, setPage}) {
+function LoginPage({setRole, setPage, setClubMemberships}) {
     function onButtonClick() {
         console.log("Logging in");
         let body = {};
@@ -27,7 +27,8 @@ function LoginPage({setRole, setPage}) {
                 sessionStorage.setItem("refresh",data.refresh);
                 sessionStorage.setItem("access", data.access);
                 //TODO: update when I am able to get all roles
-                setRole(roles.admin);
+                setClubMemberships(data.user.memberships);
+                setRole(roles.user);
                 setPage(pages.mainPage);
             }
         }).catch(error=> {

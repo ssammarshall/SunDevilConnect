@@ -21,6 +21,7 @@ function App() {
   const [activePage, setActivePage] = useState(pages.mainPage);
   const [activeRole, setActiveRole] = useState(roles.unknown);
   const [id, setId] = useState(-1);
+  const [clubMemberships, setClubMemberships] = useState({});
   
   //set up the page
   let topButtons = (<div>
@@ -33,10 +34,10 @@ function App() {
       page=<MainScreen setPage={(page) => setActivePage(page)} role={activeRole}></MainScreen>;
       break;
     case pages.loginPage:
-      page=<LoginPage setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>;
+      page=<LoginPage setClubMemberships={(membership)=>setClubMemberships(membership)} setPage={(page)=>setActivePage(page)} setRole={(role) => setActiveRole(role)}></LoginPage>;
       break;
     case pages.clubsPage:
-      page=<ClubsScreen setPage={(page)=>setActivePage(page)} role={activeRole} setId={(id)=>setId(id)}></ClubsScreen>;
+      page=<ClubsScreen clubMemberships={clubMemberships} setClubMemberships={(membership)=>setClubMemberships(membership)} setPage={(page)=>setActivePage(page)} role={activeRole} setId={(id)=>setId(id)}></ClubsScreen>;
       break;
     case pages.eventsPage:
       page=<EventsScreen setPage={(page)=>setActivePage(page)} setId={(id)=>setId(id)} role={activeRole}></EventsScreen>;
@@ -45,15 +46,14 @@ function App() {
       page=<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>;
       break;
     case pages.specificClubPage:
-      page=<IndividualClubPage role={activeRole} id={id}></IndividualClubPage>
+      page=<IndividualClubPage clubMemberships={clubMemberships} role={activeRole} id={id}></IndividualClubPage>
       break;
     case pages.specificEventPage:
       page=<IndividualEventPage role={activeRole} id={id}></IndividualEventPage>
       break;
-    /*The profile page does not work currently, so I am leading it to the pageDoesNotExist page
     case pages.profilePage:
       page=<ProfilePage role={activeRole}></ProfilePage>;
-      break;*/
+      break;
     default:
       page=<PageDoesNotExist></PageDoesNotExist>;
   }
