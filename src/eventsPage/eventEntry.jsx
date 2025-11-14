@@ -9,16 +9,16 @@ function EventEntry({event, role, setPage, setId}) {
         case roles.admin:
             return (
                 <span>
-                    <br/>{event.name}<br/>
+                    {event.name}<br/>
                     {event.location}<br/>
-                    <button onClick={()=>buttonClick()}>Update event</button>
                 </span>
             )
         default: 
             return (
-            <>
-                {event.name + ", " + event.club.name}
-            </>
+                <span>
+                    {event.name}<br/>
+                    {event.club.name}<br/>
+                </span>
             )
     }
 }
