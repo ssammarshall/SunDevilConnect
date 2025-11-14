@@ -4,7 +4,7 @@ import EventsList from '../eventsPage/eventsList';
 import { pages } from '../Pages';
 import { roles } from '../roles';
 
-function IndividualClubPage({role, id, setPage, clubMemberships}) {
+function IndividualClubPage({role, id, setPage, clubMemberships, setId}) {
 
     function newPost() {
         setPage(pages.newPostPage);
@@ -21,8 +21,8 @@ function IndividualClubPage({role, id, setPage, clubMemberships}) {
     let [clubEvents, setClubEvents] = useState({});
 
     let postsAndEvents = (<>
-        <ClubPostList posts={clubPosts} role={role}></ClubPostList>
-        <EventsList events={clubEvents} role={role}></EventsList>
+        <ClubPostList setId={(id)=>setId(id)} posts={clubPosts} role={role} setPage={(page)=>setPage(page)}></ClubPostList>
+        <EventsList events={clubEvents} role={role} setPage={(page)=>setPage(page)}></EventsList>
     </>);
 
     const [isLoading, setIsLoading] = useState(2);
@@ -53,9 +53,11 @@ function IndividualClubPage({role, id, setPage, clubMemberships}) {
     for(let i=0; i<clubMemberships.length;i++) {
         if (clubMemberships[i].club_id==id||role==roles.admin) {
             if (clubMemberships[i].role==roles.clubLeader||role==roles.admin) {
-                return (<>{postsAndEvents}<br/>
-                    <button onclick={newPost}>New Post</button>
-                    <button onclick={newEvent}>New Event</button>
+                return (<>
+                    <ClubPostList setId={(id)=>setId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
+                    <EventsList events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>
+                    <button onClick={newPost}>New Post</button>
+                    <button onClick={newEvent}>New Event</button>
                 </>)
             }
         }

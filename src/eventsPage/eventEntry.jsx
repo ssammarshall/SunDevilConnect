@@ -7,19 +7,21 @@ function EventEntry({event, role, setPage, setId}) {
     }
     switch (role) {
         case roles.admin:
-            return (
+            return (<>
                 <span>
                     {event.name}<br/>
                     {event.location}<br/>
-                </span>
-            )
+                </span><br/>
+                <button>Edit event</button>
+            </>)
         default: 
-            return (
+            return (<>
                 <span>
                     {event.name}<br/>
                     {event.club.name}<br/>
-                </span>
-            )
+                </span><br/>
+                <button onClick={buttonClick}>View event</button>
+            </>)
     }
 }
 export default EventEntry;

@@ -22,7 +22,8 @@ function App() {
   const [activeRole, setActiveRole] = useState(roles.unknown);
   const [id, setId] = useState(-1);
   const [clubMemberships, setClubMemberships] = useState({});
-  
+  const [postId, setPostId] = useState(-1);
+
   //set up the page
   let topButtons = (<div>
     {(activePage!==pages.loginPage&&activePage!==pages.profilePage)?<LoginBtn setPage={(page) => setActivePage(page)} role={activeRole}></LoginBtn>:<></>}
@@ -46,11 +47,12 @@ function App() {
       page=<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>;
       break;
     case pages.specificClubPage:
-      page=<IndividualClubPage setPage={(page)=>setActivePage(page)} clubMemberships={clubMemberships} role={activeRole} id={id}></IndividualClubPage>
+      page=<IndividualClubPage setId={(id)=>setPostId(id)} setPage={(page)=>setActivePage(page)} clubMemberships={clubMemberships} role={activeRole} id={id}></IndividualClubPage>
       break;
     case pages.specificEventPage:
       page=<IndividualEventPage role={activeRole} id={id}></IndividualEventPage>
       break;
+    
     case pages.profilePage:
       page=<ProfilePage role={activeRole}></ProfilePage>;
       break;

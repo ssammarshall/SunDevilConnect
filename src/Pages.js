@@ -8,5 +8,7 @@ export let pages = {
     specificClubPage: "clubPage",
     newUserPage: "newUserPage",
     newPostPage: "newPostPage",
-    newEventPage: "newEventPage"
+    newEventPage: "newEventPage", 
+    editEventPage: "editEventPage",
+    editPostPage: "editPostPage"
 }
