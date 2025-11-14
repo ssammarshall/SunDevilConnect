@@ -47,7 +47,7 @@ function App() {
       page=<NewUserPage setRole={(role) => setActiveRole(role)} setPage={(page)=>setActivePage(page)}></NewUserPage>;
       break;
     case pages.specificClubPage:
-      page=<IndividualClubPage setId={(id)=>setPostId(id)} setPage={(page)=>setActivePage(page)} clubMemberships={clubMemberships} role={activeRole} id={id}></IndividualClubPage>
+      page=<IndividualClubPage setEventId={(id)=>setId(id)} setPostId={(id)=>setPostId(id)} setPage={(page)=>setActivePage(page)} clubMemberships={clubMemberships} role={activeRole} id={id}></IndividualClubPage>
       break;
     case pages.specificEventPage:
       page=<IndividualEventPage role={activeRole} id={id}></IndividualEventPage>
