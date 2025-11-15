@@ -26,9 +26,12 @@ function LoginPage({setRole, setPage, setClubMemberships}) {
             if (data.access!="invalid user") {
                 sessionStorage.setItem("refresh",data.refresh);
                 sessionStorage.setItem("access", data.access);
-                //TODO: update when I am able to get all roles
                 setClubMemberships(data.user.memberships);
-                setRole(roles.user);
+                if (data.is_admin) {
+                    setRole(roles.admin);
+                } else {
+                    setRole(roles.user);
+                }
                 setPage(pages.mainPage);
             }
         }).catch(error=> {
