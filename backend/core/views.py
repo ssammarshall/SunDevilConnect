@@ -19,6 +19,7 @@ class TokenCreateView(BaseTokenCreateView):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
             "user": user_data,
+            "is_admin": user.is_superuser
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
