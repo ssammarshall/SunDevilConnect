@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Club, ClubContent, Event
+from .models import Club, ClubContent, Event, Membership
 from .permissions import IsAuthorOfClubContent, IsClubLeader, IsClubLeaderOrReadyOnly, IsClubMember
 from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
 
@@ -20,6 +20,26 @@ class ClubViewSet(ModelViewSet):
             case 'destroy': return [IsAdminUser()]
             case 'partial_update': return [IsClubLeader()]
             case _: return [IsClubLeaderOrReadyOnly()]
+    
+
+    @action(detail=True, methods=['get', 'post'], url_path='join')
+    def join(self, request, pk=None):
+        user = request.user
+        club = self.get_object()
+
+        if Membership.objects.filter(user=user, club=club).exists():
+            raise ValidationError("You are already a member of this club.")
+        
+        Membership.objects.create(
+            user=user,
+            club=club,
+            role=Membership.MEMBER
+        )
+
+        return Response(
+            {"message": f"You joined {club.name} successfully."},
+            status=status.HTTP_201_CREATED
+        )
 
 
 class ClubContentViewSet(ModelViewSet):
