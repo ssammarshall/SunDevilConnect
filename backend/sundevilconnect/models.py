@@ -50,6 +50,14 @@ class ClubContent(models.Model):
 
 
 class Event(models.Model):
+    CATEGORY_CHOICES = [
+        ("SPORTS", "Sports"),
+        ("ACADEMIC", "Academic"),
+        ("SOCIAL", "Social"),
+        ("FUNDRAISING", "Fundraising"),
+        ("NETWORKING", "Networking"),
+    ]
+
     name = models.CharField(max_length=255, unique=True)
     date = models.DateTimeField()
     location = models.CharField(max_length=255)
@@ -57,7 +65,12 @@ class Event(models.Model):
     attendees = models.PositiveIntegerField(default=0)
     max_num_of_attendees = models.PositiveIntegerField()
     club = models.ForeignKey('Club', on_delete=models.CASCADE)
-
+    category = models.CharField(
+        max_length=20,
+        choices=CATEGORY_CHOICES,
+        default="SOCIAL"
+    )
+    
     def __str__(self):
         return self.name
     
