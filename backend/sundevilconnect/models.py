@@ -68,3 +68,11 @@ class Event(models.Model):
                 check=Q(attendees__lte=F('max_num_of_attendees'))
             )
         ]
+
+
+class EventRegistration(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = ("user", "event")

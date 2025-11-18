@@ -20,7 +20,6 @@ class ClubViewSet(ModelViewSet):
             case 'destroy': return [IsAdminUser()]
             case 'partial_update': return [IsClubLeader()]
             case _: return [IsClubLeaderOrReadyOnly()]
-    
 
     @action(detail=True, methods=['get', 'post'], url_path='join')
     def join(self, request, pk=None):
@@ -39,6 +38,22 @@ class ClubViewSet(ModelViewSet):
         return Response(
             {"message": f"You joined {club.name} successfully."},
             status=status.HTTP_201_CREATED
+        )
+    
+    @action(detail=True, methods=['post'], url_path='leave')
+    def leave(self, request, pk=None):
+        user = request.user
+        club = self.get_object()
+
+        membership = Membership.objects.filter(user=user, club=club).first()
+        if not membership:
+            raise ValidationError("You are not a member of this club.")
+
+        membership.delete()
+
+        return Response(
+            {"message": f"You left {club.name}."},
+            status=status.HTTP_200_OK
         )
 
 
@@ -103,3 +118,52 @@ class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = [AllowAny]
 
+    @action(detail=True, methods=['get', 'post'], url_path='register')
+    def register(self, request, pk=None):
+        user = request.user
+        event = self.get_object()
+
+        # Must be a club member
+        is_member = Membership.objects.filter(
+            user=user,
+            club=event.club
+        ).exists()
+
+        if not is_member:
+            raise PermissionDenied("You must be a member of this club to register for this event.")
+
+        if EventRegistration.objects.filter(user=user, event=event).exists():
+            raise ValidationError("You are already registered for this event.")
+
+        if event.attendees >= event.max_num_of_attendees:
+            raise ValidationError("This event has reached maximum capacity.")
+
+        EventRegistration.objects.create(user=user, event=event)
+
+        event.attendees += 1
+        event.save(update_fields=["attendees"])
+
+        return Response(
+            {"message": f"You are registered for {event.name}."},
+            status=status.HTTP_201_CREATED
+        )
+
+    @action(detail=True, methods=['post'], url_path='leave')
+    def leave(self, request, pk=None):
+        user = request.user
+        event = self.get_object()
+
+        registration = EventRegistration.objects.filter(user=user, event=event).first()
+        if not registration:
+            raise ValidationError("You are not registered for this event.")
+
+        registration.delete()
+
+        if event.attendees > 0:
+            event.attendees -= 1
+            event.save(update_fields=["attendees"])
+
+        return Response(
+            {"message": f"You have left {event.name}."},
+            status=status.HTTP_200_OK
+        )
