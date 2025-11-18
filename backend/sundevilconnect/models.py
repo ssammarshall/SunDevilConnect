@@ -42,7 +42,7 @@ class Club(models.Model):
 
 
 class ClubContent(models.Model):
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
     title = models.CharField(max_length=255)
     body = models.TextField()
     is_flagged = models.BooleanField(default=False)
@@ -70,7 +70,7 @@ class Event(models.Model):
         choices=CATEGORY_CHOICES,
         default="SOCIAL"
     )
-    
+
     def __str__(self):
         return self.name
     
