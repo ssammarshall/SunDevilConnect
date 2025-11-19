@@ -3,12 +3,13 @@ from rest_framework import serializers
 from .models import Membership, Club, ClubContent, Event
 
 class MembershipSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
     club_id = serializers.IntegerField(source='club.id', read_only=True)
     club_name = serializers.CharField(source='club.name', read_only=True)
 
     class Meta:
         model = Membership
-        fields = ['club_id', 'club_name', 'role']
+        fields = ['user', 'club_id', 'role']
 
 
 class ClubSerializer(serializers.ModelSerializer):

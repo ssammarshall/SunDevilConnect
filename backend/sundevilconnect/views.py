@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Club, ClubContent, Event, Membership
 from .permissions import IsAuthorOfClubContent, IsClubLeader, IsClubLeaderOrReadyOnly, IsClubMember
-from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer
+from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer, MembershipSerializer
 
 class ClubViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
@@ -92,6 +92,16 @@ class ClubContentViewSet(ModelViewSet):
             {"message": "Content flagged successfully."},
             status=status.HTTP_200_OK
         )
+
+
+# Memberships for a specific Club.
+class ClubMembershipViewSet(ModelViewSet):
+    http_method_names = ['get']
+
+    serializer_class = MembershipSerializer
+
+    def get_queryset(self):
+        return Membership.objects.filter(club_id=self.kwargs['club_pk']).prefetch_related('club').prefetch_related('user')
 
 
 # Events for a specific Club.

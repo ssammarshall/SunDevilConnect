@@ -1,6 +1,6 @@
 from rest_framework_nested import routers
 
-from .views import ClubViewSet, ClubContentViewSet, ClubEventViewSet, EventViewSet
+from .views import ClubViewSet, ClubContentViewSet, ClubEventViewSet, EventViewSet, ClubMembershipViewSet
 
 router = routers.DefaultRouter()
 
@@ -8,6 +8,7 @@ router.register('clubs', ClubViewSet)
 clubs_router = routers.NestedDefaultRouter(router, 'clubs', lookup='club')
 clubs_router.register('content', ClubContentViewSet, basename='club-content')
 clubs_router.register('events', ClubEventViewSet, basename='club-events')
+clubs_router.register('members', ClubMembershipViewSet, basename='club-members')
 
 router.register('events', EventViewSet, basename='events')
 
