@@ -144,11 +144,11 @@ function EventsList({events, role, setPage, setId}) {
     return (<>
         <div>
             <div>Category: <select onChange={()=>handleFilters("category", setCategory)} id="category">
-                    <option value="MUSIC">music</option>
-                    <option value="TECH">tech</option>
+                    <option value="ACADEMIC">acadmemic</option>
+                    <option value="FUNDRAISING">fundraising</option>
                     <option value="SPORTS">sports</option>
                     <option value="SOCIAL">social</option>
-                    <option value="CAREER">career</option>
+                    <option value="NETWORKING">networking</option>
                 </select> <input onChange={()=>handleFilters("enableCategory", setEnableCategory)} id="enableCategory" type="checkbox"></input></div>
             <div>Minimum Date: <input onChange={()=>handleFilters("minimumDate", setMinDate)} type="date" id="minimumDate" placeholder="minimum date"></input> <input onChange={()=>handleFilters("enableMinDate", setEnableMinDate)} id="enableMinDate" type="checkbox"></input></div>
             <div>Maximum Date: <input onChange={()=>handleFilters("maximumDate", setMaxDate)} type="date" id="maximumDate" placeholder="maximum date"></input><input onChange={()=>handleFilters("enableMaxDate", setEnableMaxDate)} id="enableMaxDate" type="checkbox"></input></div>
