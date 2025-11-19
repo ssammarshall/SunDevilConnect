@@ -10,7 +10,7 @@ function ClubPostEntry({post, role, setPage, setId}) {
         case roles.admin:
             return (<>
                 <span>
-                    <h1>{post.title}</h1>
+                    <h3>{post.title}</h3>
                     {post.body}
                 </span><br/>
                 <button onClick={editBtn}>Edit post</button>
@@ -19,7 +19,7 @@ function ClubPostEntry({post, role, setPage, setId}) {
             return (
             <>
                 <span>
-                    <h1>{post.title}</h1>
+                    <h3>{post.title}</h3>
                     {post.body}
                 </span>
             </>
