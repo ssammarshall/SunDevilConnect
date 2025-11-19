@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ClubPostList from './clubPostList';
 import EventsList from '../eventsPage/eventsList';
+import ClubMemberList from './clubMemberList';
 import { pages } from '../Pages';
 import { roles } from '../roles';
 
@@ -27,7 +28,7 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
 
     </>);
 
-    const [isLoading, setIsLoading] = useState(3);
+    const [isLoading, setIsLoading] = useState(4);
     if (isLoading!=0) {
         //fetch needed elements
         //posts
@@ -50,7 +51,14 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
             console.log("error: "+error);
         });
         //users?
-        //fetch(process.env.REACT_APP_API_URL+"/")
+        fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/members/?format=json").then((resp)=>{
+            return resp.json();
+        }).then(function(data) {
+            setClubusers(data);
+            setIsLoading(isLoading-1);
+        }).catch(function(error) {
+            console.log("error: "+error);
+        });
         //club information
         fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/?format=json").then((resp)=>{
             return resp.json();
@@ -74,6 +82,8 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
                     <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
                     <h2>Events: </h2>
                     <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>
+                    <h2>Members: </h2>
+                    <ClubMemberList members={clubUsers} role={role}></ClubMemberList>
                     <button onClick={newPost}>New Post</button>
                     <button onClick={newEvent}>New Event</button>
                 </>)
@@ -89,6 +99,8 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
         <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={role} setPage={(page)=>setPage(page)}></ClubPostList>
         <h2>Events: </h2>        
         <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={role} setPage={(page)=>setPage(page)}></EventsList>
+        <h2>Members: </h2>
+        <ClubMemberList members={clubUsers} role={role}></ClubMemberList>
     </>);
 }
 
