@@ -61,9 +61,7 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
         }).catch(function(error) {
             console.log("error: "+error);
         });
-    }
-    console.log(isLoading);
-    if (isLoading!=0) {
+        console.log("loading status: "+isLoading);
         return (<div>Loading...</div>)
     }
     for(let i=0; i<clubMemberships.length;i++) {

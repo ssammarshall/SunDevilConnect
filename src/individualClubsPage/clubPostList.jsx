@@ -1,6 +1,6 @@
 import ClubPostEntry from "./clubPostEntry";
 function ClubPostList({posts, role, setPage, setId}) {
-    console.log(posts);
+    //console.log(posts);
     if (posts==null) {
         return (<p>This club has not posted anything yet</p>);
     }
