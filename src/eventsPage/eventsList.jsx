@@ -1,13 +1,14 @@
 import { useState } from "react";
 import EventEntry from "./eventEntry";
 function EventsList({events, role, setPage, setId}) {
-
+    const [category, setCategory] = useState("");
     const [minDate, setMinDate] = useState("");
     const [maxDate, setMaxDate] = useState("");
     const [location, setLocation] = useState("");
     const [showFree, setShowFree] = useState(false);
     const [minPopularity, setMinPopularity] = useState(0);
     const [maxPopularity, setMaxPopularity] = useState(0);
+    const [enableCategory, setEnableCategory] = useState(false);
     const [enableMinDate, setEnableMinDate] = useState(false);
     const [enableMaxDate, setEnableMaxDate] = useState(false);
     const [enableLocation, setEnableLocation] = useState(false);
@@ -85,6 +86,10 @@ function EventsList({events, role, setPage, setId}) {
                 } else {
                     return eVal<limit;
                 }
+                break;
+            case "category":
+                return (eVal==limit);
+                break;
         }
     }
 
@@ -108,6 +113,9 @@ function EventsList({events, role, setPage, setId}) {
         if (!individualFilter("attendees",e.attendees,enableMaxPopularity,maxPopularity,"max")) {
             return false;
         }
+        if (!individualFilter("category", e.category, enableCategory, category, "min")) {
+            return false;
+        }
         return true;
     }
     //console.log("loading events list");
@@ -122,11 +130,26 @@ function EventsList({events, role, setPage, setId}) {
         }
 
     }
+    filteredEvents.sort(function(a,b) {
+        if (a.category==category) {
+            return -1;
+        } else if (b.category==category) {
+            return 1;
+        }
+        return 0;
+    });
     let entries = filteredEvents.map((item) => (
         <li key={item.name}><EventEntry setPage={(page)=>setPage(page)} setId={()=>setId(item.id)} role={role} event={item}></EventEntry></li>)
     );
     return (<>
         <div>
+            <div>Category: <select onChange={()=>handleFilters("category", setCategory)} id="category">
+                    <option value="MUSIC">music</option>
+                    <option value="TECH">tech</option>
+                    <option value="SPORTS">sports</option>
+                    <option value="SOCIAL">social</option>
+                    <option value="CAREER">career</option>
+                </select> <input onChange={()=>handleFilters("enableCategory", setEnableCategory)} id="enableCategory" type="checkbox"></input></div>
             <div>Minimum Date: <input onChange={()=>handleFilters("minimumDate", setMinDate)} type="date" id="minimumDate" placeholder="minimum date"></input> <input onChange={()=>handleFilters("enableMinDate", setEnableMinDate)} id="enableMinDate" type="checkbox"></input></div>
             <div>Maximum Date: <input onChange={()=>handleFilters("maximumDate", setMaxDate)} type="date" id="maximumDate" placeholder="maximum date"></input><input onChange={()=>handleFilters("enableMaxDate", setEnableMaxDate)} id="enableMaxDate" type="checkbox"></input></div>
             <div>Location: <input onChange={()=>handleFilters("location", setLocation)} id="location" placeholder="location"></input><input onChange={()=>handleFilters("enableLocation", setEnableLocation)} id="enableLocation" type="checkbox"></input></div>
