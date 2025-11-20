@@ -26,6 +26,7 @@ function ClubMemberEntry({member, role}) {
                 {text}
                 <button onClick={admitBtn}>Add as member</button>
                 <button onClick={admitBtn}>Add as leader</button>
+                <button onClick={admitBtn}>Deny access to club</button>
             </>);
         case roles.clubMember:
             return (<>
