@@ -24,70 +24,24 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
     let [clubInfo, setClubInfo] = useState("");
     let [clubName, setClubName] = useState("");
 
-    let postsAndEvents = (<>
-
-    </>);
-
-    const [isLoading, setIsLoading] = useState(4);
-    const [hasLoadedPosts, setHasLoadedPosts] = useState(false);
-    const [hasLoadedEvents, setHasLoadedEvents] = useState(false);
-    const [hasLoadedMembers, setHasLoadedMembers] = useState(false);
-    const [hasLoadedClubData, setHasLoadedClubData] = useState(false);
-
-    if (isLoading!=0) {
-        //fetch needed elements
-        //posts
-        if (!hasLoadedPosts) {
-            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/content/?format=json").then((resp)=>{
-                return resp.json();
-            }).then(function(data) {
-                setClubPosts(data);
-                setIsLoading(isLoading-1);
-                setHasLoadedPosts(true);
-                //console.log(clubList);
-            }).catch(function(error) {
-                console.log("error: "+error);
-            });
-        }
-        //events
-        if (!hasLoadedEvents) {
-            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/events/?format=json").then((resp)=>{
-                return resp.json();
-            }).then(function(data) {
-                setClubEvents(data);
-                setHasLoadedEvents(true);
-                setIsLoading(isLoading-1);
-            }).catch(function(error) {
-                console.log("error: "+error);
-            });
-        }
-        //users
-        if (!hasLoadedMembers) {
-            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/members/?format=json").then((resp)=>{
-                return resp.json();
-            }).then(function(data) {
-                setClubusers(data);
-                setHasLoadedMembers(true);
-                setIsLoading(isLoading-1);
-                console.log(data);
-            }).catch(function(error) {
-                console.log("error: "+error);
-            });
-        }
-        //club information
-        if (!hasLoadedClubData) {
-            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/?format=json").then((resp)=>{
-                return resp.json();
-            }).then(function(data) {
-                setClubInfo(data.description);
-                setClubName(data.name);
-                setIsLoading(isLoading-1);
-            }).catch(function(error) {
-                console.log("error: "+error);
-            });
-        }
-        console.log("loading status: "+isLoading);
-        return (<div className='loadPage'>Loading...</div>)
+    //NEW STRATEGY
+    const [isLoading, setIsLoading] = useState(true);
+    if (isLoading) {
+        Promise.all([fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/content/?format=json").then(value=>value.json()),
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/events/?format=json").then(value=>value.json()),
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/members/?format=json").then(value=>value.json()),
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/?format=json").then(value=>value.json())
+        ]).then(([posts, events, members, club]) => {
+            setIsLoading(false);
+            setClubPosts(posts);
+            setClubEvents(events);
+            setClubusers(members);
+            setClubInfo(club.description);
+            setClubName(club.name);
+        }).catch((err) => {
+            console.log("error: "+err);
+        });
+        return (<div className='loadPage'>Loading...</div>);
     }
     for(let i=0; i<clubMemberships.length;i++) {
         if (clubMemberships[i].club_id==id||role==roles.admin) {
