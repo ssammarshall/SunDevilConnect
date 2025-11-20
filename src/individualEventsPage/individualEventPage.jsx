@@ -18,7 +18,7 @@ function IndividualEventPage({role, id}) {
     }
     console.log(isLoading);
     if (isLoading) {
-        return (<div>Loading...</div>)
+        return (<div className='loadPage'>Loading...</div>)
     }
 
     console.log("Event details=");

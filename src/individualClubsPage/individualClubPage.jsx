@@ -87,7 +87,7 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
             });
         }
         console.log("loading status: "+isLoading);
-        return (<div>Loading...</div>)
+        return (<div className='loadPage'>Loading...</div>)
     }
     for(let i=0; i<clubMemberships.length;i++) {
         if (clubMemberships[i].club_id==id||role==roles.admin) {

@@ -1,5 +1,4 @@
 import { roles } from "../roles";
-import { pages } from "../Pages";
 function ClubMemberEntry({member, role}) {
     function admitBtn() {
         //fetch call to add member to club

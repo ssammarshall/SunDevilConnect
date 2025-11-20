@@ -57,7 +57,7 @@ function ProfilePage({ role }) {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className='loadPage'>Loading...</div>;
   }
 
   return <></>;

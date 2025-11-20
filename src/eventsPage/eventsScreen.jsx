@@ -20,7 +20,7 @@ function EventsScreen({role, setPage, setId}) {
     }
     console.log(isLoading);
     if (isLoading) {
-        return (<div>Loading...</div>)
+        return (<div className='loadPage'>Loading...</div>)
     }
 
     return (<EventsList setPage={(page)=>setPage(page)} setId={(id)=>setId(id)} role={role} events={eventList}></EventsList>);
