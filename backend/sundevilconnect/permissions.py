@@ -11,7 +11,8 @@ class IsClubLeader(BasePermission):
     def has_permission(self, request, view):
         user = request.user
         if not user or not user.is_authenticated: return False
-        
+        if user.is_staff: return True
+
         club_id = view.kwargs.get('club_pk')
         if club_id is None: return False # No club provided.
 
@@ -21,6 +22,7 @@ class IsClubLeader(BasePermission):
 class IsClubLeaderOrReadyOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS: return True
+        if (request.user and request.user.is_staff): return True
         return IsClubLeader.has_permission(self, request, view)
 
 
