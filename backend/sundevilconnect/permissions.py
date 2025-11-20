@@ -34,7 +34,10 @@ class IsClubMember(BasePermission):
         club_id = view.kwargs.get('club_pk')
         if club_id is None: return False # No club provided.
 
-        return Membership.objects.filter(user=user, club_id=club_id).exists()
+        membership = Membership.objects.filter(user=user, club_id=club_id)
+        if not membership: return False
+        elif membership.role == 'R': return False
+        return True
 
 
 class IsClubMemberOrReadyOnly(BasePermission):
