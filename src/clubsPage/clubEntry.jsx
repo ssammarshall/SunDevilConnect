@@ -77,6 +77,13 @@ function ClubEntry({club, role, setPage, setId, clubMemberships, setClubMembersh
                                 <button onClick={()=>buttonClick()}>View club</button>
                             </span>
                         );
+                    } else if (clubMemberships[i].role==roles.requestedToJoin) {
+                        return (
+                            <span>
+                                <br/>{club.name}<br/>
+                                {club.description}<br/>
+                            </span>
+                        );
                     }
                 }
             }
