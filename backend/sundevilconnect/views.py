@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Club, ClubContent, Event, Membership
 from .permissions import IsAuthorOfClubContent, IsClubLeader, IsClubLeaderOrReadyOnly, IsClubMember
-from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer, MembershipSerializer
+from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer, MembershipSerializer, MembershipPartialUpdateSerializer
 
 class ClubViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
@@ -96,13 +96,20 @@ class ClubContentViewSet(ModelViewSet):
 
 # Memberships for a specific Club.
 class ClubMembershipViewSet(ModelViewSet):
-    http_method_names = ['get']
-
-    serializer_class = MembershipSerializer
+    http_method_names = ['get', 'patch']
 
     def get_queryset(self):
         return Membership.objects.filter(club_id=self.kwargs['club_pk']).prefetch_related('club').prefetch_related('user')
+    
+    def get_serializer_class(self):
+        match self.action:
+            case 'partial_update': return MembershipPartialUpdateSerializer
+            case _: return MembershipSerializer
 
+    def get_permissions(self):
+        match self.action:
+            case 'partial_update': return [IsClubLeader()]
+            case _: return [IsClubLeaderOrReadyOnly()]
 
 # Events for a specific Club.
 class ClubEventViewSet(ModelViewSet):
