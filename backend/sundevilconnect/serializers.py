@@ -3,12 +3,18 @@ from rest_framework import serializers
 from .models import Membership, Club, ClubContent, Event
 
 class MembershipSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
     club_id = serializers.IntegerField(source='club.id', read_only=True)
 
     class Meta:
         model = Membership
-        fields = ['user', 'club_id', 'role']
+        fields = ['id', 'username', 'club_id', 'role']
+
+
+class MembershipPartialUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Membership
+        fields = ['role']
 
 
 class ClubSerializer(serializers.ModelSerializer):
