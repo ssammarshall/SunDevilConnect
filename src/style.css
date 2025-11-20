@@ -76,3 +76,9 @@ button:focus-visible {
   left: 0%;
   position:fixed;
 }
+
+.loadPage {
+  color: #ffffff;
+  font-weight: 1000;
+  font-size:xx-large;
+}
