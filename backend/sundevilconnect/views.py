@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -19,6 +19,8 @@ class ClubViewSet(ModelViewSet):
             case 'create': return [IsAdminUser()]
             case 'destroy': return [IsAdminUser()]
             case 'partial_update': return [IsClubLeader()]
+            case 'join': return [IsAuthenticated()]
+            case 'leave': return [IsClubMember()]
             case _: return [IsClubLeaderOrReadyOnly()]
 
     @action(detail=True, methods=['get', 'post'], url_path='join')
