@@ -34,7 +34,7 @@ class ClubViewSet(ModelViewSet):
         Membership.objects.create(
             user=user,
             club=club,
-            role=Membership.MEMBER
+            role=Membership.REQUESTED_JOIN
         )
 
         return Response(
