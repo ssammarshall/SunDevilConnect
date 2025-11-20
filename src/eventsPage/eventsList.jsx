@@ -144,7 +144,7 @@ function EventsList({events, role, setPage, setId}) {
     return (<>
         <div>
             <div>Category: <select onChange={()=>handleFilters("category", setCategory)} id="category">
-                    <option value="ACADEMIC">acadmemic</option>
+                    <option value="ACADEMIC">academic</option>
                     <option value="FUNDRAISING">fundraising</option>
                     <option value="SPORTS">sports</option>
                     <option value="SOCIAL">social</option>
@@ -155,7 +155,7 @@ function EventsList({events, role, setPage, setId}) {
             <div>Location: <input onChange={()=>handleFilters("location", setLocation)} id="location" placeholder="location"></input><input onChange={()=>handleFilters("enableLocation", setEnableLocation)} id="enableLocation" type="checkbox"></input></div>
             <div>Only show free events: <input onChange={()=>handleFilters("isFree", setShowFree)} id="isFree" type="checkbox"></input></div>
             <div>Minimum Popularity: <input onChange={()=>handleFilters("popularityMinimum", setMinPopularity)} id="popularityMinimum" type="number" placeholder="minimum popularity"></input><input onChange={()=>handleFilters("enableMinPopularity", setEnableMinPopularity)} id="enableMinPopularity" type="checkbox"></input></div>
-            <div>Maximum Popularity: <input onChange={()=>handleFilters("popularityMaxiumu", setMaxPopularity)} id="popularityMaximum" type="number" placeholder="maximum popularity"></input><input onChange={()=>handleFilters("enableMaxPopularity", setEnableMaxPopularity)} id="enableMaxPopularity" type="checkbox"></input></div>
+            <div>Maximum Popularity: <input onChange={()=>handleFilters("popularityMaximum", setMaxPopularity)} id="popularityMaximum" type="number" placeholder="maximum popularity"></input><input onChange={()=>handleFilters("enableMaxPopularity", setEnableMaxPopularity)} id="enableMaxPopularity" type="checkbox"></input></div>
             <br/>
         </div>
         <ul>{entries}</ul>
