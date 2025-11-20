@@ -13,14 +13,16 @@ class User(AbstractUser): # Student
 class Membership(models.Model):
     MEMBER = 'M'
     LEADER = 'L'
+    REQUESTED_JOIN = 'R'
     ROLE_CHOICES = [
         (MEMBER, 'Member'),
-        (LEADER, 'Leader')
+        (LEADER, 'Leader'),
+        (REQUESTED_JOIN, 'Requested to Join')
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='memberships')
     club = models.ForeignKey('Club', on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=MEMBER)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=REQUESTED_JOIN)
     joined_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
