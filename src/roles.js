@@ -4,5 +4,6 @@ export let roles = {
     unknown: "not logged in",
     clubLeader: "L",
     clubMember: "M",
-    requestedToJoin: "R"
+    requestedToJoin: "R",
+    removeFromClub: "Remove"
 }

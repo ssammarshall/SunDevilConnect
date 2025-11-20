@@ -1,7 +1,37 @@
 import { roles } from "../roles";
+import { authenticate } from "../utils";
+
 function ClubMemberEntry({member, role}) {
-    function admitBtn() {
-        //fetch call to add member to club
+    function changeUserRole(role) {
+        authenticate().then((data) => {
+            if (!data.access) {
+                console.log("No access token returned from refresh");
+                return;
+            }
+            let body={};
+            body.role=role;
+            //use the new token to make a patch request
+            fetch(process.env.REACT_APP_API_URL + "/connect/clubs/"+member.club_id+"/members/"+member.id+"/?format=json", {
+                method: 'PATCH',
+                body: JSON.stringify(body),
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "JWT " + data.access,
+                },
+            })
+            //after fetching the data, print it out
+            .then((resp) => {
+                //console.log(resp);
+                return resp.json();
+            })
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (error) {
+                console.log("error: " + error);
+            });
+        });
     }
     let memberRoleText;
     if (member.role==roles.clubLeader) {
@@ -24,15 +54,13 @@ function ClubMemberEntry({member, role}) {
         case roles.requestedToJoin:
             return (<>
                 {text}
-                <button onClick={admitBtn}>Add as member</button>
-                <button onClick={admitBtn}>Add as leader</button>
-                <button onClick={admitBtn}>Deny access to club</button>
+                <button onClick={()=>changeUserRole(roles.clubMember)}>Add as member</button>
+                <button onClick={()=>changeUserRole(roles.clubLeader)}>Add as leader</button>
             </>);
         case roles.clubMember:
             return (<>
                 {text}
-                <button onClick={admitBtn}>Promote to club leader</button>
-                <button onClick={admitBtn}>Remove from club</button>
+                <button onClick={()=>changeUserRole(roles.clubLeader)}>Promote to club leader</button>
             </>);
         case roles.clubLeader:
             if (role==roles.clubLeader) {
@@ -40,8 +68,7 @@ function ClubMemberEntry({member, role}) {
             } else if (role==roles.admin){
                 return (<>
                     {text}
-                    <button onClick={admitBtn}>Demote to club member</button>
-                    <button onClick={admitBtn}>Remove from club</button>
+                    <button onClick={()=>changeUserRole(roles.clubMember)}>Demote to club member</button>
                 </>);               
             }
     }
