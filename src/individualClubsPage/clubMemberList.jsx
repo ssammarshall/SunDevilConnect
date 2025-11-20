@@ -5,6 +5,7 @@ function ClubMemberList({members, role}) {
     if (members==null) {
         return (<p>This club does not have any members yet</p>);
     }
+    let filteredMembers = [];
     members.sort((a, b)=>{
         if (a.role==b.role) {
             return 0;
@@ -12,11 +13,30 @@ function ClubMemberList({members, role}) {
         if (a.role==roles.clubLeader) {
             return -1;
         }
+        if (a.role==roles.requestedToJoin) {
+            return 1;
+        }
+        if (b.role==roles.clubLeader) {
+            return 1;
+        }
+        if (b.role==roles.requestedToJoin) {
+            return -1;
+        }
         return 1;
     });
+    //filter members if you are a normal member
+    if (role==roles.user) {
+        for (let i=0;i<members.length;i++) {
+            if (members[i].role!=roles.requestedToJoin) {
+                filteredMembers.push(members[i]);
+            }
+        }
+    } else {
+        filteredMembers=members;
+    }
     return (<ul>{
-        members.map((item) => (
-            <li key={item.user}><ClubMemberEntry role={role} member={item}></ClubMemberEntry></li>)
+        filteredMembers.map((item) => (
+            <li key={item.username}><ClubMemberEntry role={role} member={item}></ClubMemberEntry></li>)
         )
     }</ul>);
 }

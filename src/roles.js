@@ -3,5 +3,6 @@ export let roles = {
     admin: "admin",
     unknown: "not logged in",
     clubLeader: "L",
-    clubMember: "M"
+    clubMember: "M",
+    requestedToJoin: "R"
 }

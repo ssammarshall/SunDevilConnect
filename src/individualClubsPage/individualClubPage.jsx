@@ -43,22 +43,20 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
         });
         return (<div className='loadPage'>Loading...</div>);
     }
+    //check if you are a club leader or an admin
     for(let i=0; i<clubMemberships.length;i++) {
-        if (clubMemberships[i].club_id==id||role==roles.admin) {
-            if (clubMemberships[i].role==roles.clubLeader||role==roles.admin) {
-                return (<>
-                    <h1>{clubName}</h1>
-                    <h2>{clubInfo}</h2>
-                    <h2>Posts: </h2>
-                    <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
-                    <h2>Events: </h2>
-                    <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>
-                    <h2>Members: </h2>
-                    <ClubMemberList members={clubUsers} role={role}></ClubMemberList>
-                    <button onClick={newPost}>New Post</button>
-                    <button onClick={newEvent}>New Event</button>
-                </>)
-            }
+        if (clubMemberships[i].club_id==id&&clubMemberships[i].role==roles.clubLeader||role==roles.admin) {
+            return (<>
+                <h1>{clubName}</h1>
+                <h2>{clubInfo}</h2>
+                <h2>Posts: </h2>
+                <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
+                <h2>Events: </h2>
+                <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>                    <h2>Members: </h2>
+                <ClubMemberList members={clubUsers} role={role==roles.user?roles.clubLeader:role}></ClubMemberList>
+                <button onClick={newPost}>New Post</button>
+                <button onClick={newEvent}>New Event</button>
+            </>)
         }
     }
     //console.log("CLUB POSTS=");
