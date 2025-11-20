@@ -16,7 +16,7 @@ function ClubMemberList({members, role}) {
     });
     return (<ul>{
         members.map((item) => (
-            <li key={item.id}><ClubMemberEntry role={role} member={item}></ClubMemberEntry></li>)
+            <li key={item.user}><ClubMemberEntry role={role} member={item}></ClubMemberEntry></li>)
         )
     }</ul>);
 }

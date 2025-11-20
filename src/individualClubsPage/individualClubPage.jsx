@@ -29,46 +29,63 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
     </>);
 
     const [isLoading, setIsLoading] = useState(4);
+    const [hasLoadedPosts, setHasLoadedPosts] = useState(false);
+    const [hasLoadedEvents, setHasLoadedEvents] = useState(false);
+    const [hasLoadedMembers, setHasLoadedMembers] = useState(false);
+    const [hasLoadedClubData, setHasLoadedClubData] = useState(false);
+
     if (isLoading!=0) {
         //fetch needed elements
         //posts
-        fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/content/?format=json").then((resp)=>{
-            return resp.json();
-        }).then(function(data) {
-            setClubPosts(data);
-            setIsLoading(isLoading-1);
-            //console.log(clubList);
-        }).catch(function(error) {
-            console.log("error: "+error);
-        });
+        if (!hasLoadedPosts) {
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/content/?format=json").then((resp)=>{
+                return resp.json();
+            }).then(function(data) {
+                setClubPosts(data);
+                setIsLoading(isLoading-1);
+                setHasLoadedPosts(true);
+                //console.log(clubList);
+            }).catch(function(error) {
+                console.log("error: "+error);
+            });
+        }
         //events
-        fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/events/?format=json").then((resp)=>{
-            return resp.json();
-        }).then(function(data) {
-            setClubEvents(data);
-            setIsLoading(isLoading-1);
-        }).catch(function(error) {
-            console.log("error: "+error);
-        });
-        //users?
-        fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/members/?format=json").then((resp)=>{
-            return resp.json();
-        }).then(function(data) {
-            setClubusers(data);
-            setIsLoading(isLoading-1);
-        }).catch(function(error) {
-            console.log("error: "+error);
-        });
+        if (!hasLoadedEvents) {
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/events/?format=json").then((resp)=>{
+                return resp.json();
+            }).then(function(data) {
+                setClubEvents(data);
+                setHasLoadedEvents(true);
+                setIsLoading(isLoading-1);
+            }).catch(function(error) {
+                console.log("error: "+error);
+            });
+        }
+        //users
+        if (!hasLoadedMembers) {
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/members/?format=json").then((resp)=>{
+                return resp.json();
+            }).then(function(data) {
+                setClubusers(data);
+                setHasLoadedMembers(true);
+                setIsLoading(isLoading-1);
+                console.log(data);
+            }).catch(function(error) {
+                console.log("error: "+error);
+            });
+        }
         //club information
-        fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/?format=json").then((resp)=>{
-            return resp.json();
-        }).then(function(data) {
-            setClubInfo(data.description);
-            setClubName(data.name);
-            setIsLoading(isLoading-1);
-        }).catch(function(error) {
-            console.log("error: "+error);
-        });
+        if (!hasLoadedClubData) {
+            fetch(process.env.REACT_APP_API_URL+"/connect/clubs/"+id+"/?format=json").then((resp)=>{
+                return resp.json();
+            }).then(function(data) {
+                setClubInfo(data.description);
+                setClubName(data.name);
+                setIsLoading(isLoading-1);
+            }).catch(function(error) {
+                console.log("error: "+error);
+            });
+        }
         console.log("loading status: "+isLoading);
         return (<div>Loading...</div>)
     }
