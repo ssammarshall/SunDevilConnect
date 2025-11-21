@@ -6,7 +6,7 @@ import { authenticate } from '../utils.js';
 function IndividualEventPage({role, id, memberships, setPage}) {
 
     function registerForEvent() {
-        /*authenticate().then((data) => {
+        authenticate().then((data) => {
             if (!data.access) {
                 console.log("No access token returned from refresh");
                 return;
@@ -14,8 +14,8 @@ function IndividualEventPage({role, id, memberships, setPage}) {
             let body = {};
             
             //use the new token to access what you want
-            fetch(process.env.REACT_APP_API_URL + "/connect/clubs/"+eventDetails.club.id+"events/"+id+"/?format=json", {
-                method: "PATCH",
+            fetch(process.env.REACT_APP_API_URL + "/connect/events/"+id+"/register/?format=json", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
@@ -33,7 +33,7 @@ function IndividualEventPage({role, id, memberships, setPage}) {
             .catch(function (error) {
                 console.log("error: " + error);
             });
-        });*/
+        });
         setPage(pages.mainPage);
     }
 
