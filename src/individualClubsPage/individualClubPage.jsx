@@ -50,7 +50,7 @@ function IndividualClubPage({role, id, setPage, clubMemberships, setEventId, set
                 <h1>{clubName}</h1>
                 <h2>{clubInfo}</h2>
                 <h2>Posts: </h2>
-                <ClubPostList setId={(id)=>setPostId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
+                <ClubPostList clubId={id} setId={(id)=>setPostId(id)} posts={clubPosts} role={roles.admin} setPage={(page)=>setPage(page)}></ClubPostList>
                 <h2>Events: </h2>
                 <EventsList setId={(id)=>setEventId(id)} events={clubEvents} role={roles.admin} setPage={(page)=>setPage(page)}></EventsList><br/>                    <h2>Members: </h2>
                 <ClubMemberList members={clubUsers} role={role==roles.user?roles.clubLeader:role}></ClubMemberList>
