@@ -16,6 +16,7 @@ function EventEntry({event, role, setPage, setId}) {
                     {event.name}<br/>
                     {event.location}<br/>
                 </span><br/>
+                <button onClick={buttonClick}>View event</button>
                 <button onClick={editEventBtn}>Edit event</button>
             </>)
         default: 

@@ -52,7 +52,7 @@ function App() {
       page=<IndividualClubPage setEventId={(id)=>setId(id)} setPostId={(id)=>setPostId(id)} setPage={(page)=>setActivePage(page)} clubMemberships={clubMemberships} role={activeRole} id={id}></IndividualClubPage>
       break;
     case pages.specificEventPage:
-      page=<IndividualEventPage role={activeRole} id={id}></IndividualEventPage>
+      page=<IndividualEventPage setPage={(page)=>setActivePage(page)} memberships={clubMemberships} role={activeRole} id={id}></IndividualEventPage>
       break;
     case pages.editEventPage:
       page=<UpdateEventPage id={id} setPage={(page)=>setActivePage(page)}></UpdateEventPage>;

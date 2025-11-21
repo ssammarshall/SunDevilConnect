@@ -36,6 +36,7 @@ function ClubEntry({club, role, setPage, setId, clubMemberships, setClubMembersh
             })
             .then(function (data) {
                 console.log(data);
+                setPage(pages.mainPage);
             })
             .catch(function (error) {
                 console.log("error: " + error);
