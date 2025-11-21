@@ -131,11 +131,16 @@ class ClubEventViewSet(ModelViewSet):
 
 # All Events.
 class EventViewSet(ModelViewSet):
-    http_method_names = ['get']
+    http_method_names = ['get', 'post']
 
     queryset = Event.objects.all().prefetch_related('club')
     serializer_class = EventSerializer
-    permission_classes = [AllowAny]
+
+    def get_permissions(self):
+        match self.action:
+            case 'register': return [IsAuthenticated()]
+            case 'leave': return [IsAuthenticated()]
+            case _: return [IsClubLeaderOrReadyOnly()]
 
     @action(detail=True, methods=['get', 'post'], url_path='register')
     def register(self, request, pk=None):
