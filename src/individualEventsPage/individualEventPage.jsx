@@ -77,7 +77,7 @@ function IndividualEventPage({role, id, memberships, setPage}) {
 
     </>)
 
-    if (role==roles.admin||role==roles.clubLeader||role==roles.clubMember||partOfClub) {
+    if ((role==roles.admin||role==roles.clubLeader||role==roles.clubMember||partOfClub)&&(eventDetails.attendees<eventDetails.max_num_of_attendees)) {
         return (<>
             {eventInformation}
             <button onClick={registerForEvent} id="eventRegister">Register for event</button>
