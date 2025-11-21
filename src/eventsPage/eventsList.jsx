@@ -54,8 +54,8 @@ function EventsList({events, role, setPage, setId}) {
         } else if (Number(day2)>Number(day1)) {
             return true;
         }
-        //day, month, and year are the same. Change this if you want the bounds to be inclusive instead of exclusive
-        return false;
+        //day, month, and year are the same. Change this if you want the bounds to be exclusive instead of inclusive
+        return true;
     }
 
     function individualFilter(eValName, eVal, enable, limit, minMax) {
@@ -82,9 +82,9 @@ function EventsList({events, role, setPage, setId}) {
                 break;
             case "attendees":
                 if (minMax=="min") {
-                    return limit<eVal;
+                    return limit<=eVal;
                 } else {
-                    return eVal<limit;
+                    return eVal<=limit;
                 }
                 break;
             case "category":
