@@ -21,7 +21,9 @@ function LoginBtn({setPage, role}) {
     } else {
         return (
             <>
+                {/*
                 <button className="topBtn" onClick={profile}>My profile</button>
+                */}
             </>
         )
     }
