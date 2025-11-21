@@ -1,10 +1,12 @@
+from django.core.exceptions import ValidationError
+
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Club, ClubContent, Event, Membership
+from .models import Club, ClubContent, Event, EventRegistration, Membership
 from .permissions import IsAuthorOfClubContent, IsClubLeader, IsClubLeaderOrReadyOnly, IsClubMember
 from .serializers import ClubSerializer, ClubContentSerializer, EventSerializer, EventCreateSerializer, EventPartialUpdateSerializer, MembershipSerializer, MembershipPartialUpdateSerializer
 
@@ -154,7 +156,7 @@ class EventViewSet(ModelViewSet):
         ).exists()
 
         if not is_member:
-            raise PermissionDenied("You must be a member of this club to register for this event.")
+            raise PermissionError("You must be a member of this club to register for this event.")
 
         if EventRegistration.objects.filter(user=user, event=event).exists():
             raise ValidationError("You are already registered for this event.")
