@@ -1,8 +1,41 @@
 import { pages } from '../Pages';
+import { authenticate } from '../utils';
 
 function UpdatePostPage({clubId, postId, setPage}) {
     function onButtonClick() {
-        //do post request to reach main clubs page
+                let body={};
+                body.title=document.getElementById("title").value;
+                body.body=document.getElementById("body").value;
+                authenticate().then((data) => {
+                    if (!data.access) {
+                        console.log("No access token returned from refresh");
+                        return;
+                    }
+                    //use the new token to access what you want
+                    fetch(process.env.REACT_APP_API_URL + "/connect/clubs/"+clubId+"/content/"+postId+"/?format=json", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            Authorization: "JWT " + data.access,
+                        },
+                        body: JSON.stringify(body)
+                    })
+                    //after fetching the data, print it out
+                    .then((resp) => {
+                        if (resp.status==403) {
+                            console.log("You are not the creator of this post");
+                        }
+                        //console.log(resp);
+                        return resp.json();
+                    })
+                    .then(function (data) {
+                        console.log(data);
+                    })
+                    .catch(function (error) {
+                        console.log("error: " + error);
+                    });
+                });
         setPage(pages.mainPage);
     }
     return (<>
