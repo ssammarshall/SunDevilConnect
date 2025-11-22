@@ -4,7 +4,7 @@ import { pages } from '../Pages.js';
 import { authenticate } from '../utils.js';
 
 function IndividualEventPage({role, id, memberships, setPage}) {
-
+    const [isRegistered, setIsRegistered] = useState(false);
     function registerForEvent() {
         authenticate().then((data) => {
             if (!data.access) {
@@ -40,6 +40,7 @@ function IndividualEventPage({role, id, memberships, setPage}) {
             })
             .catch(function (error) {
                 console.log("error: " + error);
+                setIsRegistered(true);
             });
         });
     }
@@ -83,7 +84,13 @@ function IndividualEventPage({role, id, memberships, setPage}) {
         <p>{eventDetails.attendees}</p>
 
     </>)
-
+    if (isRegistered) {
+        return (
+            <>{eventInformation}<br/>
+            You are already registered for this event.
+            </>
+        )
+    }
     if ((role==roles.admin||role==roles.clubLeader||role==roles.clubMember||partOfClub)&&(eventDetails.attendees<eventDetails.max_num_of_attendees)) {
         return (<>
             {eventInformation}
