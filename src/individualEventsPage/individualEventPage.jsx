@@ -11,9 +11,7 @@ function IndividualEventPage({role, id, memberships, setPage}) {
                 console.log("No access token returned from refresh");
                 return;
             }
-            let body = {};
             
-            //use the new token to access what you want
             fetch(process.env.REACT_APP_API_URL + "/connect/events/"+id+"/register/?format=json", {
                 method: "POST",
                 headers: {
@@ -22,19 +20,28 @@ function IndividualEventPage({role, id, memberships, setPage}) {
                     Authorization: "JWT " + data.access,
                 },
             })
-            //after fetching the data, print it out
             .then((resp) => {
-                //console.log(resp);
+                if (!resp.ok) {
+                    return resp.text().then(text => {
+                        let errorData;
+                        try {
+                            errorData = JSON.parse(text);
+                        } catch (e) {
+                            errorData = { detail: text || "An error occurred" };
+                        }
+                        throw new Error(JSON.stringify(errorData));
+                    });
+                }
                 return resp.json();
             })
             .then(function (data) {
-                console.log(data);
+                console.log("Registration successful:", data);
+                setPage(pages.mainPage);
             })
             .catch(function (error) {
                 console.log("error: " + error);
             });
         });
-        setPage(pages.mainPage);
     }
 
 

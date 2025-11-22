@@ -1,7 +1,6 @@
-from django.core.exceptions import ValidationError
-
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -156,7 +155,7 @@ class EventViewSet(ModelViewSet):
         ).exists()
 
         if not is_member:
-            raise PermissionError("You must be a member of this club to register for this event.")
+            raise PermissionDenied("You must be a member of this club to register for this event.")
 
         if EventRegistration.objects.filter(user=user, event=event).exists():
             raise ValidationError("You are already registered for this event.")
